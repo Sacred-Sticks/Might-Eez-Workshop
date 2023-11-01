@@ -3,20 +3,18 @@ using UnityEngine;
 
 public class Dispense : ICommand
 {
-    public Dispense(int millisecondsDelay, GameObject output)
+    public Dispense(int millisecondsDelay)
     {
         MillisecondsDelay = millisecondsDelay;
-        CommandOutput = output;
     }
 
     public int MillisecondsDelay { get; }
-    public GameObject CommandOutput { get; set; }
+    private Resource[] inputs;
 
     public async Task Activate(Workstation.Inventory workstationInventory)
     {
-        workstationInventory.Inputs = new GameObject[workstationInventory.NumInputs];
+        (inputs, workstationInventory.Inputs) = (workstationInventory.Inputs, new Resource[workstationInventory.Inputs.Length]);
         await Task.Delay(MillisecondsDelay);
-        workstationInventory.Output = CommandOutput;
     }
 }
 
@@ -28,13 +26,12 @@ public class Melt : ICommand
     }
 
     public int MillisecondsDelay { get; }
-    public GameObject CommandOutput { get; set; }
+    private Resource[] inputs;
 
     public async Task Activate(Workstation.Inventory workstationInventory)
     {
-        workstationInventory.Inputs = new GameObject[workstationInventory.NumInputs];
+        (inputs, workstationInventory.Inputs) = (workstationInventory.Inputs, new Resource[workstationInventory.Inputs.Length]);
         await Task.Delay(MillisecondsDelay);
-        workstationInventory.Output = CommandOutput;
     }
 }
 
@@ -46,13 +43,12 @@ public class Mold : ICommand
     }
 
     public int MillisecondsDelay { get; }
-    public GameObject CommandOutput { get; set; }
+    private Resource[] inputs;
 
     public async Task Activate(Workstation.Inventory workstationInventory)
     {
-        workstationInventory.Inputs = new GameObject[workstationInventory.NumInputs];
+        (inputs, workstationInventory.Inputs) = (workstationInventory.Inputs, new Resource[workstationInventory.Inputs.Length]);
         await Task.Delay(MillisecondsDelay);
-        workstationInventory.Output = CommandOutput;
     }
 }
 
@@ -65,12 +61,11 @@ public class Assemble : ICommand
 
     public int MillisecondsDelay { get; }
     public GameObject CommandOutput { get; set; }
-    private GameObject[] inputs;
+    private Resource[] inputs;
 
     public async Task Activate(Workstation.Inventory workstationInventory)
     {
-        (inputs, workstationInventory.Inputs) = (workstationInventory.Inputs, new GameObject[workstationInventory.Inputs.Length]);
+        (inputs, workstationInventory.Inputs) = (workstationInventory.Inputs, new Resource[workstationInventory.Inputs.Length]);
         await Task.Delay(MillisecondsDelay);
-        workstationInventory.Output = CommandOutput;
     }
 }

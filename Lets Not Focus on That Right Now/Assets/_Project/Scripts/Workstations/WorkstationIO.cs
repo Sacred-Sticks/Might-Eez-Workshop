@@ -2,5 +2,5 @@
 
 public class WorkstationIO : MonoBehaviour
 {
-    public GameObject CarriedElement { get; set; }
+    public Resource CarriedResource { get; set; }
 }

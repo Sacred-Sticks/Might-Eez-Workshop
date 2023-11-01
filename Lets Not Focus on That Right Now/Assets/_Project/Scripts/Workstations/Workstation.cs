@@ -7,7 +7,7 @@ public class Workstation : MonoBehaviour
 
     public enum WorkstationType
     {
-        Dispeenser,
+        Dispenser,
         Melter,
         Molder,
         Assembler,
@@ -28,7 +28,7 @@ public class Workstation : MonoBehaviour
     {
         command = workstationType switch
         {
-            WorkstationType.Dispeenser => new Dispense(dispenseDelay, null),
+            WorkstationType.Dispenser => new Dispense(dispenseDelay),
             WorkstationType.Melter => new Melt(meltDelay),
             WorkstationType.Molder => new Mold(moldDelay),
             WorkstationType.Assembler => new Assemble(assembleDelay),
@@ -42,7 +42,6 @@ public class Workstation : MonoBehaviour
     {
         if (command == null)
             return;
-        command.CommandOutput = output;
         command.Activate(workstationInventory);
     }
 
@@ -51,11 +50,11 @@ public class Workstation : MonoBehaviour
         public Inventory(int numInputs)
         {
             NumInputs = numInputs;
-            Inputs = new GameObject[NumInputs];
+            Inputs = new Resource[NumInputs];
         }
 
         public int NumInputs { get; }
-        public GameObject[] Inputs { get; set; }
-        public GameObject Output { get; set; }
+        public Resource[] Inputs { get; set; }
+        public Resource Output { get; set; }
     }
 }
