@@ -26,12 +26,12 @@ public class Workstation : MonoBehaviour
     #region Unity Events
     private void Awake()
     {
-        command = workstationType switch
+        command = workstationType switch  // remove code smell here
         {
-            WorkstationType.Dispenser => new Dispense(dispenseDelay),
-            WorkstationType.Melter => new Melt(meltDelay),
-            WorkstationType.Molder => new Mold(moldDelay),
-            WorkstationType.Assembler => new Assemble(assembleDelay),
+            WorkstationType.Dispenser => new Dispense<Plastic>(dispenseDelay),
+            WorkstationType.Melter => new ProcessMaterial<Plastic>(meltDelay),
+            WorkstationType.Molder => new MoldMaterial<Plastic>(moldDelay, ToyPart<Plastic>.ToySection.Arm),
+            WorkstationType.Assembler => new Assemble<Plastic>(assembleDelay),
             _ => command,
         };
         

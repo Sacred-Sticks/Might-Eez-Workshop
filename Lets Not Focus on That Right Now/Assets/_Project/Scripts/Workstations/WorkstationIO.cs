@@ -2,5 +2,5 @@
 
 public class WorkstationIO : MonoBehaviour
 {
-    public Resource CarriedResource { get; set; }
+    public Resources CarriedResources { get; set; }
 }
