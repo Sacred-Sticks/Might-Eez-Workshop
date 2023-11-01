@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class Workstation : MonoBehaviour
     }
 
     private ICommand command;
-    private Inventory inventory;
+    public Inventory WorkstationInventory { get; private set; }
     
     #region Workstation Delays
     private const int dispenseDelay = 1000;
@@ -33,54 +34,95 @@ public class Workstation : MonoBehaviour
     #region Unity Events
     private void Awake()
     {
-        command = WorkstationType switch
+        int inputCount;
+        switch (workstationType)
         {
-            WorkstationCategory.Dispenser => new Dispense(dispenseDelay, materialType),
-            WorkstationCategory.Processor => new ProcessMaterial(meltDelay, materialType),
-            WorkstationCategory.Molder => new MoldMaterial(moldDelay, toyPart, materialType),
-            WorkstationCategory.Assembler => new Assemble(assembleDelay, materialType),
-            _ => command,
-        };
-
-        int numInputs = workstationType switch
-        {
-            WorkstationCategory.Dispenser => 0,
-            WorkstationCategory.Assembler => numToyParts,
-            _ => 1,
-        };
-        
-        inventory = new Inventory(numInputs);
+            case  WorkstationCategory.Dispenser:
+                command = new Dispense(dispenseDelay, materialType);
+                inputCount = 0;
+                WorkstationInventory = new Inventory<Resource, BaseMaterial>(inputCount);
+                break;
+            case WorkstationCategory.Processor:
+                command = new ProcessMaterial(meltDelay, materialType);
+                inputCount = 1;
+                WorkstationInventory = new Inventory<BaseMaterial, ProcessedMaterial>(inputCount);
+                break;
+            case WorkstationCategory.Molder:
+                command = new MoldMaterial(moldDelay, toyPart, materialType);
+                inputCount = 1;
+                WorkstationInventory = new Inventory<ProcessedMaterial, ToyPart>(inputCount);
+                break;
+            case WorkstationCategory.Assembler:
+                command = new Assemble(assembleDelay, materialType);
+                inputCount = numToyParts;
+                WorkstationInventory = new Inventory<ToyPart, Toy>(inputCount);
+                break;
+        }
     }
     #endregion
 
-    public void AddToInventory(Resource resource)
-    {
-        if (inventory.Inputs.Count < inventory.NumInputs)
-            inventory.Inputs.Add(resource);
-    }
-
     public void Activate()
     {
-        command?.Activate(inventory);
+        command?.Activate(WorkstationInventory);
     }
 
-    public Resource TakeInventory()
+    public abstract class Inventory
     {
-        var output = inventory.Output;
-        inventory.Output = null;
-        return output;
-    }
-
-    public class Inventory
-    {
-        public Inventory(int numInputs)
+        protected Inventory(int numInputs)
         {
-            Inputs = new List<Resource>();
             NumInputs = numInputs;
         }
-
+        
         public int NumInputs { get; }
-        public List<Resource> Inputs { get; set; }
-        public Resource Output { get; set; }
+
+        public void ClearInputs<T>()
+        {
+            var inventoryType = GetType();
+            var inputProperty = inventoryType.GetProperty("Inputs");
+            var inputValue = (List<T>)inputProperty.GetValue(this);
+            inputValue.Clear();
+        }
+        
+        public void AddInput<T>(T resource)
+        {
+            var inputs = GetInputs<T>();
+            if (inputs.Count < NumInputs)
+                inputs.Add(resource);
+        }
+
+        public List<T> GetInputs<T>()
+        {
+            var inventoryType = GetType();
+            var inputProperty = inventoryType.GetProperty("Inputs");
+            var inputValue = (List<T>)inputProperty.GetValue(this);
+            return inputValue;
+        }
+
+        public void SetOutput<T>(T output)
+        {
+            var inventoryType = GetType();
+            var outputProperty = inventoryType.GetProperty("Output");
+            var outputValue = (T)outputProperty.GetValue(this);
+            outputProperty.SetValue(this, output);
+        }
+
+        public T GetOutput<T>()
+        {
+            var inventoryType = GetType();
+            var outputProperty = inventoryType.GetProperty("Output");
+            var outputValue = (T)outputProperty.GetValue(this);
+            return outputValue;
+        }
+    }
+
+    public sealed class Inventory<TInput, TOutput> : Inventory where TInput : Resource where TOutput : Resource
+    {
+        public Inventory(int numInputs) : base(numInputs)
+        {
+            Inputs = new List<TInput>();
+        }
+        
+        public List<TInput> Inputs { get; }
+        public TOutput Output { get; set; }
     }
 }
