@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class Workstation : MonoBehaviour
 {
-    [SerializeField] private WorkstationType workstationType;
+    [SerializeField] private WorkstationCategory workstationType;
+    [SerializeField] private BaseMaterial.MaterialType materialType;
+    [Space]
+    [SerializeField] private ToyPart.ToySection toyPart;
 
-    public enum WorkstationType
+    public WorkstationCategory WorkstationType => workstationType;
+
+    public enum WorkstationCategory
     {
         Dispenser,
         Melter,
@@ -25,12 +30,12 @@ public class Workstation : MonoBehaviour
     #region Unity Events
     private void Awake()
     {
-        command = workstationType switch  // remove code smell here
+        command = WorkstationType switch
         {
-            WorkstationType.Dispenser => new Dispense<Plastic>(dispenseDelay),
-            WorkstationType.Melter => new ProcessMaterial<Plastic>(meltDelay),
-            WorkstationType.Molder => new MoldMaterial<Plastic>(moldDelay, ToyPart<Plastic>.ToySection.Arm),
-            WorkstationType.Assembler => new Assemble<Plastic>(assembleDelay),
+            WorkstationCategory.Dispenser => new Dispense(dispenseDelay, materialType),
+            WorkstationCategory.Melter => new ProcessMaterial(meltDelay, materialType),
+            WorkstationCategory.Molder => new MoldMaterial(moldDelay, toyPart, materialType),
+            WorkstationCategory.Assembler => new Assemble(assembleDelay, materialType),
             _ => command,
         };
         
@@ -39,9 +44,7 @@ public class Workstation : MonoBehaviour
 
     public void Activate()
     {
-        if (command == null)
-            return;
-        command.Activate(workstationInventory);
+        command?.Activate(workstationInventory);
     }
 
     public Resource TakeInventory()

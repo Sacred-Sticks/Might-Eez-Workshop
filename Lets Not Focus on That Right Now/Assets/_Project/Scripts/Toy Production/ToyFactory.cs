@@ -2,23 +2,23 @@
 
 public static class ToyFactory
 {
-    public static BaseMaterial CreateMaterial<T>() where T : BaseMaterial
+    public static BaseMaterial CreateMaterial(BaseMaterial.MaterialType material)
     {
-        return (T) Activator.CreateInstance(typeof(T));
+        return new BaseMaterial(material);
     }
     
-    public static ProcessedMaterial<T> ProcessMaterial<T>(BaseMaterial baseMaterial) where T : BaseMaterial
+    public static ProcessedMaterial ProcessMaterial(BaseMaterial baseMaterial)
     {
-        return new ProcessedMaterial<T>();
+        return new ProcessedMaterial(baseMaterial.Material);
     }
 
-    public static ToyPart<T> MoldToy<T>(ProcessedMaterial<T> processedMaterial, ToyPart<T>.ToySection toySection) where T : BaseMaterial
+    public static ToyPart MoldToy(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
     {
-        return new ToyPart<T>(toySection);
+        return new ToyPart(processedMaterial.Material, toySection);
     }
 
-    public static Toy<T> AssembleToy<T>(ToyPart<T>[] toyParts) where T : BaseMaterial
+    public static Toy AssembleToy(ToyPart[] toyParts)
     {
-        return new Toy<T>(toyParts);
+        return new Toy(toyParts);
     }
 }

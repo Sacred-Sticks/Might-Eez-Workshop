@@ -3,34 +3,31 @@ public abstract class Resource
     
 }
 
-public abstract class BaseMaterial : Resource
+public class BaseMaterial : Resource
 {
+    public BaseMaterial(MaterialType material)
+    {
+        Material = material;
+    }
     
-}
-
-public class Plastic : BaseMaterial
-{
-    public Plastic() { }
-}
-
-public class Metal : BaseMaterial
-{
-    public Metal() { }
-}
-
-public class Wood : BaseMaterial
-{
-    public Wood() { }
-}
-
-public class ProcessedMaterial<T> : Resource where T : BaseMaterial
-{
+    public MaterialType Material { get; }
     
+    public enum MaterialType
+    {
+        Plastic,
+        Metal,
+        Wood,
+    }
 }
 
-public class ToyPart<T> : Resource where T : BaseMaterial
+public class ProcessedMaterial : BaseMaterial
 {
-    public ToyPart(ToySection part)
+    public ProcessedMaterial(MaterialType material) : base(material) { }
+}
+
+public class ToyPart : BaseMaterial
+{
+    public ToyPart(MaterialType material, ToySection part) : base(material)
     {
         Part = part;
     }
@@ -46,12 +43,12 @@ public class ToyPart<T> : Resource where T : BaseMaterial
     }
 }
 
-public class Toy<T> : Resource where T : BaseMaterial
+public class Toy : Resource
 {
-    public Toy(ToyPart<T>[] toyParts)
+    public Toy(ToyPart[] toyParts)
     {
         ToyParts = toyParts;
     }
     
-    public ToyPart<T>[] ToyParts { get; }
+    public ToyPart[] ToyParts { get; }
 }
