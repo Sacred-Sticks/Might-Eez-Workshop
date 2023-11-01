@@ -3,7 +3,6 @@ using UnityEngine;
 public class Workstation : MonoBehaviour
 {
     [SerializeField] private WorkstationType workstationType;
-    [SerializeField] private GameObject output; // This is a broken method and must be replaced quickly
 
     public enum WorkstationType
     {
@@ -43,6 +42,13 @@ public class Workstation : MonoBehaviour
         if (command == null)
             return;
         command.Activate(workstationInventory);
+    }
+
+    public Resource TakeInventory()
+    {
+        var output = workstationInventory.Output;
+        workstationInventory.Output = null;
+        return output;
     }
 
     public class Inventory
