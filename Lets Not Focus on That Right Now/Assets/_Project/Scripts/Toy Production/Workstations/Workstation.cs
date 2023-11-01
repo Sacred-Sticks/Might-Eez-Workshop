@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +21,7 @@ public class Workstation : MonoBehaviour
     }
 
     private ICommand command;
-    public Inventory WorkstationInventory { get; private set; }
+    public WorkstationInventory Inventory { get; private set; }
     
     #region Workstation Delays
     private const int dispenseDelay = 1000;
@@ -40,22 +39,22 @@ public class Workstation : MonoBehaviour
             case  WorkstationCategory.Dispenser:
                 command = new Dispense(dispenseDelay, materialType);
                 inputCount = 0;
-                WorkstationInventory = new Inventory<Resource, BaseMaterial>(inputCount);
+                Inventory = new WorkstationInventory<Resource, BaseMaterial>(inputCount);
                 break;
             case WorkstationCategory.Processor:
                 command = new ProcessMaterial(meltDelay, materialType);
                 inputCount = 1;
-                WorkstationInventory = new Inventory<BaseMaterial, ProcessedMaterial>(inputCount);
+                Inventory = new WorkstationInventory<BaseMaterial, ProcessedMaterial>(inputCount);
                 break;
             case WorkstationCategory.Molder:
                 command = new MoldMaterial(moldDelay, toyPart, materialType);
                 inputCount = 1;
-                WorkstationInventory = new Inventory<ProcessedMaterial, ToyPart>(inputCount);
+                Inventory = new WorkstationInventory<ProcessedMaterial, ToyPart>(inputCount);
                 break;
             case WorkstationCategory.Assembler:
                 command = new Assemble(assembleDelay, materialType);
                 inputCount = numToyParts;
-                WorkstationInventory = new Inventory<ToyPart, Toy>(inputCount);
+                Inventory = new WorkstationInventory<ToyPart, Toy>(inputCount);
                 break;
         }
     }
@@ -63,66 +62,6 @@ public class Workstation : MonoBehaviour
 
     public void Activate()
     {
-        command?.Activate(WorkstationInventory);
-    }
-
-    public abstract class Inventory
-    {
-        protected Inventory(int numInputs)
-        {
-            NumInputs = numInputs;
-        }
-        
-        public int NumInputs { get; }
-
-        public void ClearInputs<T>()
-        {
-            var inventoryType = GetType();
-            var inputProperty = inventoryType.GetProperty("Inputs");
-            var inputValue = (List<T>)inputProperty.GetValue(this);
-            inputValue.Clear();
-        }
-        
-        public void AddInput<T>(T resource)
-        {
-            var inputs = GetInputs<T>();
-            if (inputs.Count < NumInputs)
-                inputs.Add(resource);
-        }
-
-        public List<T> GetInputs<T>()
-        {
-            var inventoryType = GetType();
-            var inputProperty = inventoryType.GetProperty("Inputs");
-            var inputValue = (List<T>)inputProperty.GetValue(this);
-            return inputValue;
-        }
-
-        public void SetOutput<T>(T output)
-        {
-            var inventoryType = GetType();
-            var outputProperty = inventoryType.GetProperty("Output");
-            var outputValue = (T)outputProperty.GetValue(this);
-            outputProperty.SetValue(this, output);
-        }
-
-        public T GetOutput<T>()
-        {
-            var inventoryType = GetType();
-            var outputProperty = inventoryType.GetProperty("Output");
-            var outputValue = (T)outputProperty.GetValue(this);
-            return outputValue;
-        }
-    }
-
-    public sealed class Inventory<TInput, TOutput> : Inventory where TInput : Resource where TOutput : Resource
-    {
-        public Inventory(int numInputs) : base(numInputs)
-        {
-            Inputs = new List<TInput>();
-        }
-        
-        public List<TInput> Inputs { get; }
-        public TOutput Output { get; set; }
+        command?.Activate(Inventory);
     }
 }

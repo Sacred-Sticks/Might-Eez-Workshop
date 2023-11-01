@@ -6,7 +6,7 @@ public interface ICommand
 {
     public int MillisecondsDelay { get; }
 
-    public Task Activate(Workstation.Inventory inventory);
+    public Task Activate(WorkstationInventory workstationInventory);
 }
 
 public class Dispense : ICommand
@@ -20,10 +20,10 @@ public class Dispense : ICommand
     public int MillisecondsDelay { get; }
     private BaseMaterial.MaterialType material { get; }
 
-    public async Task Activate(Workstation.Inventory inventory)
+    public async Task Activate(WorkstationInventory workstationInventory)
     {
         await Task.Delay(MillisecondsDelay);
-        inventory.SetOutput(ToyFactory.CreateMaterial(material));
+        workstationInventory.SetOutput(ToyFactory.CreateMaterial(material));
     }
 }
 
@@ -39,14 +39,14 @@ public class ProcessMaterial : ICommand
     private BaseMaterial.MaterialType material { get; }
     private BaseMaterial input;
 
-    public async Task Activate(Workstation.Inventory inventory)
+    public async Task Activate(WorkstationInventory workstationInventory)
     {
-        input = inventory.GetInputs<BaseMaterial>().FirstOrDefault();
-        inventory.ClearInputs<BaseMaterial>();
+        input = workstationInventory.GetInputs<BaseMaterial>().FirstOrDefault();
+        workstationInventory.ClearInputs<BaseMaterial>();
         if (input.Material != material)
             return;
         await Task.Delay(MillisecondsDelay);
-        inventory.SetOutput(ToyFactory.ProcessMaterial(input));
+        workstationInventory.SetOutput(ToyFactory.ProcessMaterial(input));
     }
 }
 
@@ -64,14 +64,14 @@ public class MoldMaterial : ICommand
     private BaseMaterial.MaterialType material { get; }
     private ProcessedMaterial input;
 
-    public async Task Activate(Workstation.Inventory inventory)
+    public async Task Activate(WorkstationInventory workstationInventory)
     {
-        input = inventory.GetInputs<ProcessedMaterial>().FirstOrDefault();
-        inventory.ClearInputs<ProcessedMaterial>();
+        input = workstationInventory.GetInputs<ProcessedMaterial>().FirstOrDefault();
+        workstationInventory.ClearInputs<ProcessedMaterial>();
         if (input.Material != material)
             return;
         await Task.Delay(MillisecondsDelay);
-        inventory.SetOutput(ToyFactory.MoldToy(input, toyPart));
+        workstationInventory.SetOutput(ToyFactory.MoldToy(input, toyPart));
     }
 }
 
@@ -87,13 +87,13 @@ public class Assemble : ICommand
     private BaseMaterial.MaterialType material { get; }
     private ToyPart[] inputs;
 
-    public async Task Activate(Workstation.Inventory inventory)
+    public async Task Activate(WorkstationInventory workstationInventory)
     {
-        inputs = inventory.GetInputs<ToyPart>().ToArray();
-        inventory.ClearInputs<ToyPart>();
+        inputs = workstationInventory.GetInputs<ToyPart>().ToArray();
+        workstationInventory.ClearInputs<ToyPart>();
         if (inputs.Any(toyPart => toyPart.Material != material))
             return;
         await Task.Delay(MillisecondsDelay);
-        inventory.SetOutput(ToyFactory.AssembleToy(inputs));
+        workstationInventory.SetOutput(ToyFactory.AssembleToy(inputs));
     }
 }
