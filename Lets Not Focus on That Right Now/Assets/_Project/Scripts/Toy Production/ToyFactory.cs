@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 
 public static class ToyFactory
 {
@@ -19,6 +19,6 @@ public static class ToyFactory
 
     public static Toy AssembleToy(ToyPart[] toyParts)
     {
-        return new Toy(toyParts);
+        return new Toy(toyParts, toyParts.FirstOrDefault().Material);
     }
 }

@@ -43,9 +43,9 @@ public class ToyPart : BaseMaterial
     }
 }
 
-public class Toy : Resource
+public class Toy : BaseMaterial
 {
-    public Toy(ToyPart[] toyParts)
+    public Toy(ToyPart[] toyParts, MaterialType material) : base(material)
     {
         ToyParts = toyParts;
     }
