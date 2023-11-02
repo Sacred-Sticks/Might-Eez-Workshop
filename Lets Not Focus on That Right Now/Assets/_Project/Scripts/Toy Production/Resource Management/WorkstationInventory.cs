@@ -6,6 +6,11 @@ public abstract class WorkstationInventory
     {
         NumInputs = numInputs;
     }
+
+    public static WorkstationInventory<Resource, Resource> CreateDefaultInventory()
+    {
+        return new WorkstationInventory<Resource, Resource>(0);
+    }
         
     public int NumInputs { get; }
 

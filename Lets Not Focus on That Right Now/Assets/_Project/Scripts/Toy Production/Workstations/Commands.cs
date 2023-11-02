@@ -7,6 +7,20 @@ public interface ICommand
     public int MillisecondsDelay { get; }
 
     public Task Activate(WorkstationInventory workstationInventory);
+
+    public static ICommand CreateDefaultCommand()
+    {
+        return new DefaultCommand();
+    }
+}
+
+public class DefaultCommand : ICommand
+{
+    public int MillisecondsDelay { get; }
+    public async Task Activate(WorkstationInventory workstationInventory)
+    {
+        Debug.LogWarning("Default Command Used");
+    }
 }
 
 public class Dispense : ICommand

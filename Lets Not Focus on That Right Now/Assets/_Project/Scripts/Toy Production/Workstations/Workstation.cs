@@ -22,7 +22,7 @@ public class Workstation : MonoBehaviour
 
     private ICommand command;
     public WorkstationInventory Inventory { get; private set; }
-    
+
     #region Workstation Delays
     private const int dispenseDelay = 1000;
     private const int meltDelay = 1000;
@@ -33,30 +33,8 @@ public class Workstation : MonoBehaviour
     #region Unity Events
     private void Awake()
     {
-        int inputCount;
-        switch (workstationType)
-        {
-            case  WorkstationCategory.Dispenser:
-                command = new Dispense(dispenseDelay, materialType);
-                inputCount = 0;
-                Inventory = new WorkstationInventory<Resource, BaseMaterial>(inputCount);
-                break;
-            case WorkstationCategory.Processor:
-                command = new ProcessMaterial(meltDelay, materialType);
-                inputCount = 1;
-                Inventory = new WorkstationInventory<BaseMaterial, ProcessedMaterial>(inputCount);
-                break;
-            case WorkstationCategory.Molder:
-                command = new MoldMaterial(moldDelay, toyPart, materialType);
-                inputCount = 1;
-                Inventory = new WorkstationInventory<ProcessedMaterial, ToyPart>(inputCount);
-                break;
-            case WorkstationCategory.Assembler:
-                command = new Assemble(assembleDelay, materialType);
-                inputCount = numToyParts;
-                Inventory = new WorkstationInventory<ToyPart, Toy>(inputCount);
-                break;
-        }
+        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay));
+        Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts);
     }
     #endregion
 
