@@ -36,6 +36,12 @@ public class Workstation : MonoBehaviour
         command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay));
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts);
     }
+
+    private void Start()
+    {
+        if (workstationType == WorkstationCategory.Dispenser)
+            Activate();
+    }
     #endregion
 
     public void Activate()

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Inputs
   m_EditorClassIdentifier: 
   maxPlayerCount: 1
-  inputObjects: []
+  inputObjects:
+  - {fileID: 11400000, guid: b18e41c3599ecab479944c5e6f70b410, type: 2}

@@ -1,4 +1,4 @@
-public abstract class Resource
+public class Resource
 {
     
 }

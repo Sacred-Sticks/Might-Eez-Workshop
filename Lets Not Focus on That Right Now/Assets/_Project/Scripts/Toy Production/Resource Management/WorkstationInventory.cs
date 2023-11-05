@@ -22,16 +22,23 @@ public abstract class WorkstationInventory
         inputValue.Clear();
     }
         
-    public void AddInput<T>(T resource)
+    public bool AddInput<T>(T resource)
     {
         var inputs = GetInputs<T>();
+        if (inputs == null)
+            return false;
         if (inputs.Count < NumInputs)
             inputs.Add(resource);
+        return inputs.Count >= NumInputs;
     }
 
     public List<T> GetInputs<T>()
     {
+        var type = typeof(T);
         var inventoryType = GetType();
+        var genericType = inventoryType.GetGenericArguments()[0];
+        if (genericType != typeof(T))
+            return null;
         var inputProperty = inventoryType.GetProperty("Inputs");
         var inputValue = (List<T>)inputProperty.GetValue(this);
         return inputValue;
@@ -45,7 +52,7 @@ public abstract class WorkstationInventory
         outputProperty.SetValue(this, output);
     }
 
-    public T GetOutput<T>()
+    public T TakeOutput<T>()
     {
         var inventoryType = GetType();
         var outputProperty = inventoryType.GetProperty("Output");
