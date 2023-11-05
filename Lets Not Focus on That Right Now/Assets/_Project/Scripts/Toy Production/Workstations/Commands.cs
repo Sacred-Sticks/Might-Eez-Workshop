@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public interface ICommand
@@ -17,23 +16,24 @@ public interface ICommand
 
 public class DefaultCommand : ICommand
 {
-    public int MillisecondsDelay { get; }
+    public int MillisecondsDelay { get; } = 0;
     public async Task Activate(Workstation workstation)
     {
+        await Task.Delay(MillisecondsDelay);
         Debug.LogWarning("Default Command Used");
     }
 }
 
 public class Dispense : ICommand
 {
-    public Dispense(int millisecondsDelay, BaseMaterial.MaterialType materialType)
+    public Dispense(int millisecondsDelay, Resource.MaterialType materialType)
     {
         MillisecondsDelay = millisecondsDelay;
         material = materialType;
     }
 
     public int MillisecondsDelay { get; }
-    private BaseMaterial.MaterialType material { get; }
+    private Resource.MaterialType material { get; }
 
     public async Task Activate(Workstation workstation)
     {
@@ -46,14 +46,14 @@ public class Dispense : ICommand
 
 public class ProcessMaterial : ICommand
 {
-    public ProcessMaterial(int millisecondsDelay, BaseMaterial.MaterialType materialType)
+    public ProcessMaterial(int millisecondsDelay, Resource.MaterialType materialType)
     {
         MillisecondsDelay = millisecondsDelay;
         material = materialType;
     }
 
     public int MillisecondsDelay { get; }
-    private BaseMaterial.MaterialType material { get; }
+    private Resource.MaterialType material { get; }
     private BaseMaterial input;
 
     public async Task Activate(Workstation workstation)
@@ -71,7 +71,7 @@ public class ProcessMaterial : ICommand
 
 public class MoldMaterial : ICommand
 {
-    public MoldMaterial(int millisecondsDelay, ToyPart.ToySection toySection, BaseMaterial.MaterialType materialType)
+    public MoldMaterial(int millisecondsDelay, ToyPart.ToySection toySection, Resource.MaterialType materialType)
     {
         MillisecondsDelay = millisecondsDelay;
         toyPart = toySection;
@@ -80,7 +80,7 @@ public class MoldMaterial : ICommand
 
     public int MillisecondsDelay { get; }
     private ToyPart.ToySection toyPart { get; }
-    private BaseMaterial.MaterialType material { get; }
+    private Resource.MaterialType material { get; }
     private ProcessedMaterial input;
 
     public async Task Activate(Workstation workstation)
@@ -98,14 +98,12 @@ public class MoldMaterial : ICommand
 
 public class Assemble : ICommand
 {
-    public Assemble(int millisecondsDelay, BaseMaterial.MaterialType materialType)
+    public Assemble(int millisecondsDelay, Resource.MaterialType materialType)
     {
         MillisecondsDelay = millisecondsDelay;
-        material = materialType;
     }
 
     public int MillisecondsDelay { get; }
-    private BaseMaterial.MaterialType material { get; }
     private ToyPart[] inputs;
 
     public async Task Activate(Workstation workstation)
@@ -114,8 +112,6 @@ public class Assemble : ICommand
         if (inputs.Length != workstation.Inventory.NumInputs)
             return;
         workstation.Inventory.ClearInputs<ToyPart>();
-        if (inputs.Any(toyPart => toyPart.Material != material))
-            return;
         workstation.WorkstationActive = true;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.AssembleToy(inputs));

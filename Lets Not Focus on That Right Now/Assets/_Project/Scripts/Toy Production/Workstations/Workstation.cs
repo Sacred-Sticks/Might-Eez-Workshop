@@ -37,7 +37,7 @@ public class Workstation : MonoBehaviour
     {
         command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, toyPart, 
             (dispenseDelay, meltDelay, moldDelay, assembleDelay, outputDelay));
-        Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts);
+        Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts, materialType);
     }
     #endregion
 

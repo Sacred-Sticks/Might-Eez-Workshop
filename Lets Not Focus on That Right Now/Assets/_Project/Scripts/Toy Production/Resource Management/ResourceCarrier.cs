@@ -88,8 +88,6 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
                 resource = workstation.Inventory.TakeOutput<Toy>();
                 workstation.Inventory.SetOutput<Toy>(null);
                 break;
-            default:
-                throw new NotImplementedException();
         }
         resource ??= new Resource();
         Resource = resource;

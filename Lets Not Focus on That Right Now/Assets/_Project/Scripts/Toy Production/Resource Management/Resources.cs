@@ -1,6 +1,13 @@
 public class Resource
 {
+    public MaterialType Material { get; protected set; }
     
+    public enum MaterialType
+    {
+        Plastic,
+        Metal,
+        Wood,
+    }
 }
 
 public class BaseMaterial : Resource
@@ -8,15 +15,6 @@ public class BaseMaterial : Resource
     public BaseMaterial(MaterialType material)
     {
         Material = material;
-    }
-    
-    public MaterialType Material { get; }
-    
-    public enum MaterialType
-    {
-        Plastic,
-        Metal,
-        Wood,
     }
 }
 

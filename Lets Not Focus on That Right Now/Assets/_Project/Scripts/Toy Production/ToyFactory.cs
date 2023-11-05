@@ -18,15 +18,16 @@ public static class ToyFactory
         return command;
     }
 
-    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts)
+    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts, 
+        BaseMaterial.MaterialType materialType)
     {
         WorkstationInventory inventory = workstationType switch
         {
-            Workstation.WorkstationCategory.Dispenser => new WorkstationInventory<Resource, BaseMaterial>(0),
-            Workstation.WorkstationCategory.Processor => new WorkstationInventory<BaseMaterial, ProcessedMaterial>(1),
-            Workstation.WorkstationCategory.Molder => new WorkstationInventory<ProcessedMaterial, ToyPart>(1),
-            Workstation.WorkstationCategory.Assembler => new WorkstationInventory<ToyPart, Toy>(numToyParts),
-            Workstation.WorkstationCategory.Output => new WorkstationInventory<Toy, Resource>(numToyParts),
+            Workstation.WorkstationCategory.Dispenser => new WorkstationInventory<Resource, BaseMaterial>(0, materialType),
+            Workstation.WorkstationCategory.Processor => new WorkstationInventory<BaseMaterial, ProcessedMaterial>(1, materialType),
+            Workstation.WorkstationCategory.Molder => new WorkstationInventory<ProcessedMaterial, ToyPart>(1, materialType),
+            Workstation.WorkstationCategory.Assembler => new WorkstationInventory<ToyPart, Toy>(numToyParts, materialType),
+            Workstation.WorkstationCategory.Output => new WorkstationInventory<Toy, Resource>(numToyParts, materialType),
             _ => WorkstationInventory.CreateDefaultInventory(),
         };
         return inventory;
@@ -54,6 +55,6 @@ public static class ToyFactory
 
     public static void OutputToy(Toy toy)
     {
-        Debug.Log($"Output: {toy}");
+        Debug.Log($"Output: {toy}: {toy.ToyParts}");
     }
 }
