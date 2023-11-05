@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public interface ICommand
@@ -118,6 +119,26 @@ public class Assemble : ICommand
         workstation.WorkstationActive = true;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.AssembleToy(inputs));
+        workstation.WorkstationActive = false;
+    }
+}
+
+public class Output : ICommand
+{
+    public Output(int millisecondsDelay)
+    {
+        MillisecondsDelay = millisecondsDelay;
+    }
+
+    private Toy input;
+    public int MillisecondsDelay { get; }
+    public async Task Activate(Workstation workstation)
+    {
+        input = workstation.Inventory.GetInputs<Toy>().FirstOrDefault();
+        workstation.Inventory.ClearInputs<Toy>();
+        workstation.WorkstationActive = true;
+        await Task.Delay(MillisecondsDelay);
+        ToyFactory.OutputToy(input);
         workstation.WorkstationActive = false;
     }
 }

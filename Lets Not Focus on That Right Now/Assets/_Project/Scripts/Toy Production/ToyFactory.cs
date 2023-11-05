@@ -1,9 +1,10 @@
 ﻿using System.Linq;
+using UnityEngine;
 
 public static class ToyFactory
 {
     public static ICommand CreateWorkstationCommand(Workstation.WorkstationCategory workstationType, BaseMaterial.MaterialType materialType, ToyPart.ToySection toyPart,
-        (int dispense, int process, int mold, int assemble) delays)
+        (int dispense, int process, int mold, int assemble, int output) delays)
     {
         var command = workstationType switch
         {
@@ -11,6 +12,7 @@ public static class ToyFactory
             Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, materialType),
             Workstation.WorkstationCategory.Molder => new MoldMaterial(delays.mold, toyPart, materialType),
             Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, materialType),
+            Workstation.WorkstationCategory.Output => new Output(delays.output),
             _ => ICommand.CreateDefaultCommand(),
         };
         return command;
@@ -24,6 +26,7 @@ public static class ToyFactory
             Workstation.WorkstationCategory.Processor => new WorkstationInventory<BaseMaterial, ProcessedMaterial>(1),
             Workstation.WorkstationCategory.Molder => new WorkstationInventory<ProcessedMaterial, ToyPart>(1),
             Workstation.WorkstationCategory.Assembler => new WorkstationInventory<ToyPart, Toy>(numToyParts),
+            Workstation.WorkstationCategory.Output => new WorkstationInventory<Toy, Resource>(numToyParts),
             _ => WorkstationInventory.CreateDefaultInventory(),
         };
         return inventory;
@@ -47,5 +50,10 @@ public static class ToyFactory
     public static Toy AssembleToy(ToyPart[] toyParts)
     {
         return new Toy(toyParts, toyParts.FirstOrDefault().Material);
+    }
+
+    public static void OutputToy(Toy toy)
+    {
+        Debug.Log($"Output: {toy}");
     }
 }
