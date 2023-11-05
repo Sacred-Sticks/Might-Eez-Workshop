@@ -17,12 +17,18 @@ public class WorkstationEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        var prop = serializedObject.GetIterator();
+        if (prop.NextVisible(true))
+        {
+            EditorGUILayout.PropertyField(prop, true);
+            prop.NextVisible(true);
+        }
+
 
         EditorGUILayout.PropertyField(workstationType);
 
         var myComponent = (Workstation)target;
 
-        var prop = serializedObject.GetIterator();
         bool enterChildren = true;
         while (prop.NextVisible(enterChildren))
         {
