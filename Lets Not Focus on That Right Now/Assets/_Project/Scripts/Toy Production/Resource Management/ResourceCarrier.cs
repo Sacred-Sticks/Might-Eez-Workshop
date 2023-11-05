@@ -1,18 +1,37 @@
 using System;
+using Kickstarter.Events;
 using Kickstarter.Identification;
 using Kickstarter.Inputs;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(WorkstationInteractor))]
 public class ResourceCarrier : MonoBehaviour, IInputReceiver
 {
-    [SerializeField] private FloatInput interactInput;
+    [SerializeField] private FloatInput giveTakeInput;
     [Space]
-    [SerializeField] private float maxInteractionDistance;
+    [Header("Outgoing Events")]
+    [SerializeField] private Service showCurrentResource;
 
-    public Resource resource { get; private set; }
+    private WorkstationInteractor workstationInteractor;
+
+    private Resource resource;
+    public Resource Resource
+    {
+        get => resource;
+        private set
+        {
+            resource = value;
+            showCurrentResource.Trigger(new ShowResource(resource));
+        }
+    }
 
     #region Unity Events
+    private void Awake()
+    {
+        workstationInteractor = GetComponent<WorkstationInteractor>();
+    }
+
     private void Start()
     {
         resource = new Resource();
@@ -22,12 +41,12 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
     #region Inputs
     public void SubscribeToInputs(Player player)
     {
-        interactInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        giveTakeInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     public void UnsubscribeToInputs(Player player)
     {
-        interactInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        giveTakeInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     private void OnInteractInputChange(float input)
@@ -35,7 +54,7 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
         if (input < 1)
             return;
 
-        var workstation = FindWorkstation();
+        var workstation = workstationInteractor.FindWorkstation();
         if (workstation == null)
             return;
         
@@ -47,15 +66,6 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
         GiveResource(workstation);
     }
     #endregion
-
-    private Workstation FindWorkstation()
-    {
-        var ray = new Ray(transform.position, transform.forward);
-        if (!Physics.Raycast(ray, out var hit, maxInteractionDistance))
-            return null;
-        hit.transform.TryGetComponent(out Workstation workstation);
-        return workstation;
-    }
 
     private void TakeResource(Workstation workstation)
     {
@@ -82,32 +92,33 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
                 throw new NotImplementedException();
         }
         resource ??= new Resource();
-        Debug.Log($"New Resource Acquired: {resource.GetType()}");
+        Resource = resource;
     }
 
     private void GiveResource(Workstation workstation)
     {
-        bool giveSuccessful = true;
-        switch (resource)
+        bool giveSuccessful = resource switch
         {
-            case Toy toy:
-                giveSuccessful = workstation.Inventory.AddInput(toy);
-                break;
-            case ToyPart toyPart:
-                giveSuccessful = workstation.Inventory.AddInput(toyPart);
-                break;
-            case ProcessedMaterial processedMaterial:
-                giveSuccessful =  workstation.Inventory.AddInput(processedMaterial);
-                break;
-            case BaseMaterial baseMaterial:
-                giveSuccessful = workstation.Inventory.AddInput(baseMaterial);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        resource = new Resource();
+            Toy toy => workstation.Inventory.AddInput(toy),
+            ToyPart toyPart => workstation.Inventory.AddInput(toyPart),
+            ProcessedMaterial processedMaterial => workstation.Inventory.AddInput(processedMaterial),
+            BaseMaterial baseMaterial => workstation.Inventory.AddInput(baseMaterial),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
         if (!giveSuccessful)
             return;
-        workstation.Activate();
+        Resource = new Resource();
     }
+
+    #region Events
+    public class ShowResource : EventArgs
+    {
+        public ShowResource(Resource resource)
+        {
+            Resource = resource;
+        }
+        
+        public Resource Resource { get; }
+    }
+    #endregion
 }

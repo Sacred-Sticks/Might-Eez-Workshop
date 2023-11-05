@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Workstation : MonoBehaviour
@@ -22,7 +21,8 @@ public class Workstation : MonoBehaviour
 
     private ICommand command;
     public WorkstationInventory Inventory { get; private set; }
-
+    public bool WorkstationActive { get; set; }
+    
     #region Workstation Delays
     private const int dispenseDelay = 1000;
     private const int meltDelay = 1000;
@@ -36,16 +36,11 @@ public class Workstation : MonoBehaviour
         command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay));
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts);
     }
-
-    private void Start()
-    {
-        if (workstationType == WorkstationCategory.Dispenser)
-            Activate();
-    }
     #endregion
 
     public void Activate()
     {
-        command?.Activate(Inventory);
+        if (!WorkstationActive)
+            command?.Activate(this);
     }
 }

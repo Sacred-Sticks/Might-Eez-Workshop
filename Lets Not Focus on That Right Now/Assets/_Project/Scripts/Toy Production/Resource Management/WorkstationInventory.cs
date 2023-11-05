@@ -27,9 +27,10 @@ public abstract class WorkstationInventory
         var inputs = GetInputs<T>();
         if (inputs == null)
             return false;
-        if (inputs.Count < NumInputs)
-            inputs.Add(resource);
-        return inputs.Count >= NumInputs;
+        if (inputs.Count >= NumInputs)
+            return false;
+        inputs.Add(resource);
+        return true;
     }
 
     public List<T> GetInputs<T>()
