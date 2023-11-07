@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Kickstarter.Inputs;
 using UnityEngine;
 
@@ -18,6 +20,7 @@ namespace Kickstarter.Identification
         [SerializeField] private PlayerIdentifier playerID;
 
         private IInputReceiver[] inputReceivers;
+        private readonly List<IInputReceiver> registeredListeners = new List<IInputReceiver>();
 
         public PlayerIdentifier PlayerID
         {
@@ -27,11 +30,9 @@ namespace Kickstarter.Identification
             }
             set
             {
-                foreach (var inputReceiver in inputReceivers)
-                    inputReceiver.UnsubscribeToInputs(this);
+                DeregisterInputs();
                 playerID = value;
-                foreach (var inputReceiver in inputReceivers)
-                    inputReceiver.SubscribeToInputs(this);
+                RegisterInputs();
             }
         }
 
@@ -40,27 +41,27 @@ namespace Kickstarter.Identification
             inputReceivers = GetComponents<IInputReceiver>();
         }
 
-        private void Start()
+        private void Start() => RegisterInputs();
+
+        private void OnEnable() => RegisterInputs();
+
+        private void OnDisable() => DeregisterInputs();
+
+        private void RegisterInputs()
         {
-            foreach (var inputReceiver in inputReceivers)
+            foreach (var inputReceiver in inputReceivers.Where(i => !registeredListeners.Contains(i)))
             {
                 inputReceiver.SubscribeToInputs(this);
+                registeredListeners.Add(inputReceiver);
             }
         }
 
-        private void OnEnable()
+        private void DeregisterInputs()
         {
-            foreach (var inputReceiver in inputReceivers)
-            {
-                inputReceiver.SubscribeToInputs(this);
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (var inputReceiver in inputReceivers)
+            foreach (var inputReceiver in inputReceivers.Where(i => registeredListeners.Contains(i)))
             {
                 inputReceiver.UnsubscribeToInputs(this);
+                registeredListeners.Remove(inputReceiver);
             }
         }
     }
