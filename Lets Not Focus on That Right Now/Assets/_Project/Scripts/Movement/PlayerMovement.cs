@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour, IInputReceiver
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Vector2Input playerInputs;
+    [SerializeField] private float deadzone;
+
+    [SerializeField]
+    private float slerpRatio;
     private Vector3 rawInputs;
 
     void FixedUpdate()
@@ -21,6 +25,11 @@ public class PlayerMovement : MonoBehaviour, IInputReceiver
     private void MovePlayer()
     {
         rb.velocity = rawInputs * moveSpeed;
+        if (!(rawInputs.sqrMagnitude < deadzone * deadzone))
+        {
+            float angleA = Mathf.Atan2(rawInputs.x, rawInputs.z) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f,angleA, 0f), slerpRatio);
+        }
     }
 
     private void OnMoveInputChange(Vector2 inputs)
