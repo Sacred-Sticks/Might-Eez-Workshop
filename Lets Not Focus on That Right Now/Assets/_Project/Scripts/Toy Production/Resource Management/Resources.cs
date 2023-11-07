@@ -1,6 +1,26 @@
 public class Resource
 {
-    public MaterialType Material { get; protected set; }
+    public Resource() { }
+
+    protected Resource(MaterialType material)
+    {
+        Material = material;
+    }
+    
+    public MaterialType Material { get; private set; }
+
+    public MaterialColor Color { get; protected set; }
+    
+    public enum MaterialColor
+    {
+        Red,
+        Yellow,
+        Green,
+        Blue,
+        Purple,
+        White,
+        Black,
+    }
     
     public enum MaterialType
     {
@@ -12,20 +32,20 @@ public class Resource
 
 public class BaseMaterial : Resource
 {
-    public BaseMaterial(MaterialType material)
+    public BaseMaterial(MaterialType material, MaterialColor color) : base(material)
     {
-        Material = material;
+        Color = color;
     }
 }
 
 public class ProcessedMaterial : BaseMaterial
 {
-    public ProcessedMaterial(MaterialType material) : base(material) { }
+    public ProcessedMaterial(MaterialType material, MaterialColor color) : base(material, color) { }
 }
 
 public class ToyPart : BaseMaterial
 {
-    public ToyPart(MaterialType material, ToySection part) : base(material)
+    public ToyPart(MaterialType material, MaterialColor color, ToySection part) : base(material, color)
     {
         Part = part;
     }
@@ -41,7 +61,7 @@ public class ToyPart : BaseMaterial
     }
 }
 
-public class Toy : BaseMaterial
+public class Toy : Resource
 {
     public Toy(ToyPart[] toyParts, MaterialType material) : base(material)
     {

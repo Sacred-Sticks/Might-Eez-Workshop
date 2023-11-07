@@ -4,6 +4,7 @@ public class Workstation : MonoBehaviour
 {
     [SerializeField] private WorkstationCategory workstationType;
     [SerializeField] private BaseMaterial.MaterialType materialType;
+    [SerializeField] private BaseMaterial.MaterialColor materialColor;
     [Space]
     [SerializeField] private ToyPart.ToySection toyPart;
     [Space]
@@ -35,8 +36,8 @@ public class Workstation : MonoBehaviour
     #region Unity Events
     private void Awake()
     {
-        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, toyPart, 
-            (dispenseDelay, meltDelay, moldDelay, assembleDelay, outputDelay));
+        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, 
+            toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay, outputDelay));
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts, materialType);
     }
     #endregion
