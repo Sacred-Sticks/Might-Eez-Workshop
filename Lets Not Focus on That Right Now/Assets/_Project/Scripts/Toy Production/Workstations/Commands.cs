@@ -26,20 +26,22 @@ public class DefaultCommand : ICommand
 
 public class Dispense : ICommand
 {
-    public Dispense(int millisecondsDelay, Resource.MaterialType materialType)
+    public Dispense(int millisecondsDelay, Resource.MaterialType materialType, Resource.MaterialColor materialColor)
     {
         MillisecondsDelay = millisecondsDelay;
         material = materialType;
+        color = materialColor;
     }
 
     public int MillisecondsDelay { get; }
     private Resource.MaterialType material { get; }
+    private Resource.MaterialColor color { get; }
 
     public async Task Activate(Workstation workstation)
     {
         workstation.WorkstationActive = true;
         await Task.Delay(MillisecondsDelay);
-        workstation.Inventory.SetOutput(ToyFactory.CreateMaterial(material));
+        workstation.Inventory.SetOutput(ToyFactory.CreateMaterial(material, color));
         workstation.WorkstationActive = false;
     }
 }

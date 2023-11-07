@@ -7,6 +7,7 @@ public class WorkstationEditor : Editor
     private SerializedProperty m_Script;
     private SerializedProperty workstationType;
     private SerializedProperty materialType;
+    private SerializedProperty materialColor;
     private SerializedProperty toyPart;
     private SerializedProperty numToyParts;
 
@@ -15,6 +16,7 @@ public class WorkstationEditor : Editor
         m_Script = serializedObject.FindProperty(nameof(m_Script));
         workstationType = serializedObject.FindProperty(nameof(workstationType));
         materialType = serializedObject.FindProperty(nameof(materialType));
+        materialColor = serializedObject.FindProperty(nameof(materialColor));
         toyPart = serializedObject.FindProperty(nameof(toyPart));
         numToyParts = serializedObject.FindProperty(nameof(numToyParts));
     }
@@ -34,6 +36,7 @@ public class WorkstationEditor : Editor
         {
             case Workstation.WorkstationCategory.Dispenser:
                 desiredProperties.Add(materialType);
+                desiredProperties.Add(materialColor);
                 break;
             case Workstation.WorkstationCategory.Processor:
                 desiredProperties.Add(materialType);
