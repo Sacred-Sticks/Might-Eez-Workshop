@@ -3,23 +3,23 @@ using UnityEngine;
 
 public static class ToyFactory
 {
-    public static ICommand CreateWorkstationCommand(Workstation.WorkstationCategory workstationType, BaseMaterial.MaterialType materialType, ToyPart.ToySection toyPart,
-        (int dispense, int process, int mold, int assemble, int output) delays)
+    public static ICommand CreateWorkstationCommand(Workstation.WorkstationCategory workstationType, Resource.MaterialType material, Resource.MaterialColor color,
+        ToyPart.ToySection toyPart, (int dispense, int process, int mold, int assemble, int output) delays)
     {
         var command = workstationType switch
         {
-            Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, materialType),
-            Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, materialType),
-            Workstation.WorkstationCategory.Constructor => new MoldMaterial(delays.mold, toyPart, materialType),
-            Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, materialType),
+            Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, material, color),
+            Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, material),
+            Workstation.WorkstationCategory.Constructor => new MoldMaterial(delays.mold, toyPart, material),
+            Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, material),
             Workstation.WorkstationCategory.Output => new Output(delays.output),
             _ => ICommand.CreateDefaultCommand(),
         };
         return command;
     }
 
-    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts, 
-        BaseMaterial.MaterialType materialType)
+    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts,
+        Resource.MaterialType materialType)
     {
         WorkstationInventory inventory = workstationType switch
         {
@@ -33,19 +33,19 @@ public static class ToyFactory
         return inventory;
     }
 
-    public static BaseMaterial CreateMaterial(BaseMaterial.MaterialType material)
+    public static BaseMaterial CreateMaterial(Resource.MaterialType material, Resource.MaterialColor color)
     {
-        return new BaseMaterial(material);
+        return new BaseMaterial(material, color);
     }
 
     public static ProcessedMaterial ProcessMaterial(BaseMaterial baseMaterial)
     {
-        return new ProcessedMaterial(baseMaterial.Material);
+        return new ProcessedMaterial(baseMaterial.Material, baseMaterial.Color);
     }
 
     public static ToyPart ConstructToyPart(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
     {
-        return new ToyPart(processedMaterial.Material, toySection);
+        return new ToyPart(processedMaterial.Material, processedMaterial.Color, toySection);
     }
 
     public static Toy AssembleToy(ToyPart[] toyParts)
@@ -55,6 +55,7 @@ public static class ToyFactory
 
     public static void OutputToy(Toy toy)
     {
-        Debug.Log($"Output: {toy}: {toy.ToyParts}");
+        Debug.Log($"Output: {toy}: {toy.ToyParts[0].Color}");
+        Debug.Log($"Output: {toy}: {toy.ToyParts[1].Color}");
     }
 }

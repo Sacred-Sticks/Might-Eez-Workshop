@@ -32,7 +32,8 @@ public class WorkstationInteractor : MonoBehaviour, IInputReceiver
     private void Interact()
     {
         var workstation = FindWorkstation();
-        workstation.Activate();
+        if (workstation)
+            workstation.Activate();
     }
     
     public Workstation FindWorkstation()
