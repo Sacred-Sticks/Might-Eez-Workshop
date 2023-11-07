@@ -28,13 +28,13 @@ public class PlayerMovement : MonoBehaviour, IInputReceiver
         rawInputs = new Vector3(inputs.x, 0, inputs.y);
     }
 
-    public void SubscribeToInputs(Player player)
+    public bool SubscribeToInputs(Player player)
     {
-        playerInputs.SubscribeToInputAction(OnMoveInputChange, player.PlayerID);
+        return playerInputs.SubscribeToInputAction(OnMoveInputChange, player.PlayerID);
     }
 
-    public void UnsubscribeToInputs(Player player)
+    public bool UnsubscribeToInputs(Player player)
     {
-        playerInputs.UnsubscribeToInputAction(OnMoveInputChange,player.PlayerID);
+        return playerInputs.UnsubscribeToInputAction(OnMoveInputChange,player.PlayerID);
     }
 }

@@ -10,14 +10,14 @@ public class WorkstationInteractor : MonoBehaviour, IInputReceiver
     [SerializeField] private float maxInteractionDistance;
 
     #region Inputs
-    public void SubscribeToInputs(Player player)
+    public bool SubscribeToInputs(Player player)
     {
-        interactInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return interactInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
-    public void UnsubscribeToInputs(Player player)
+    public bool UnsubscribeToInputs(Player player)
     {
-        interactInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return interactInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     private void OnInteractInputChange(float input)
