@@ -35,7 +35,7 @@ public class ToyPart : BaseMaterial
     public enum ToySection
     {
         Arm,
-        Body,
+        Torso,
         Leg,
         Head,
     }

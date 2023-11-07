@@ -91,7 +91,7 @@ public class MoldMaterial : ICommand
             return;
         workstation.WorkstationActive = true;
         await Task.Delay(MillisecondsDelay);
-        workstation.Inventory.SetOutput(ToyFactory.MoldToy(input, toyPart));
+        workstation.Inventory.SetOutput(ToyFactory.ConstructToyPart(input, toyPart));
         workstation.WorkstationActive = false;
     }
 }

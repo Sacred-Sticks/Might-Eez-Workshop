@@ -1,79 +1,93 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kickstarter.State_Controllers
+namespace Kickstarter.StateControllers
 {
-    public class StateMachine<TState> where TState : Enum
+    public class StateMachine<TEnum> where TEnum : Enum
     {
-        public StateMachine(TState initialState)
+        private StateMachine(TEnum initialState, Dictionary<TEnum, List<TEnum>> transitions,
+            Dictionary<TEnum, List<Action>> entryListeners, Dictionary<TEnum, List<Action>> exitListeners)
         {
-            var allStates = Enum.GetValues(typeof(TState));
-            foreach (TState potentialState in allStates)
-            {
-                stateTransitions.Add(potentialState, new List<TState>());
-                onStateBegin.Add(potentialState, null);
-                onStateEnd.Add(potentialState, null);
-            }
-
-            State = initialState;
+            stateTransitions = transitions;
+            CurrentState = initialState;
+            this.entryListeners = entryListeners;
+            this.exitListeners = exitListeners;
         }
 
-        public enum StateChange
-        {
-            Begin,
-            End,
-        }
+        private readonly Dictionary<TEnum, List<TEnum>> stateTransitions;
+        private readonly Dictionary<TEnum, List<Action>> entryListeners;
+        private readonly Dictionary<TEnum, List<Action>> exitListeners;
 
-        private TState state;
-        public TState State
+        private TEnum currentState;
+        public TEnum CurrentState
         {
-            get
-            {
-                return state;
-            }
+            get => currentState;
             set
             {
-                if (!stateTransitions[State].Contains(value))
+                if (!stateTransitions.ContainsKey(currentState))
                     return;
-                onStateEnd[state]();
-                state = value;
-                onStateBegin[state]();
+                if (!stateTransitions[currentState].Contains(value))
+                    return;
+                if (exitListeners.ContainsKey(currentState))
+                    exitListeners[currentState].ForEach(l => l.Invoke());
+                currentState = value;
+                if (entryListeners.ContainsKey(currentState))
+                    entryListeners[currentState].ForEach(l => l.Invoke());
             }
         }
-
-        private Dictionary<TState, List<TState>> stateTransitions;
-        private Dictionary<TState, Action> onStateBegin;
-        private Dictionary<TState, Action> onStateEnd;
-
-        public void AddTransition(TState baseState, TState newState)
+        
+        public class Builder
         {
-            stateTransitions[baseState].Add(newState);
-        }
+            private TEnum initialState;
+            private readonly Dictionary<TEnum, List<TEnum>> transitions;
+            private readonly Dictionary<TEnum, List<Action>> entryListeners;
+            private readonly Dictionary<TEnum, List<Action>> exitListeners;
 
-        public void SubscribeToStateChange(StateChange changeType, TState state, Action subscription)
-        {
-            switch (changeType)
+            public Builder()
             {
-                case StateChange.Begin:
-                    onStateBegin[state] += subscription;
-                    break;
-                case StateChange.End:
-                    onStateEnd[state] += subscription;
-                    break;
+                transitions = new Dictionary<TEnum, List<TEnum>>();
+                entryListeners = new Dictionary<TEnum, List<Action>>();
+                exitListeners = new Dictionary<TEnum, List<Action>>();
             }
-        }
 
-        public void UnsubscribeToStateChange(StateChange changeType, TState state, Action subscription)
-        {
-            switch (changeType)
+            public Builder WithInitialState(TEnum state)
             {
-                case StateChange.Begin:
-                    onStateBegin[state] -= subscription;
-                    break;
-                case StateChange.End:
-                    onStateEnd[state] -= subscription;
-                    break;
+                initialState = state;
+                return this;
+            }
+
+            public Builder WithTransition(TEnum fromState, TEnum toState)
+            {
+                if (!transitions.ContainsKey(fromState))
+                    transitions.Add(fromState, new List<TEnum>());
+                transitions[fromState].Add(toState);
+                return this;
+            }
+
+            public Builder WithStateListener(TEnum state, transitionType transitionType, Action listener)
+            {
+                var listeners = transitionType switch
+                {
+                    transitionType.Start => entryListeners,
+                    transitionType.End => exitListeners,
+                    _ => throw new ArgumentOutOfRangeException(nameof(transitionType), transitionType, null),
+                };
+                if (!listeners.ContainsKey(state))
+                    listeners.Add(state, new List<Action>());
+                listeners[state].Add(listener);
+                return this;
+            }
+
+            public StateMachine<TEnum> Build()
+            {
+                return new StateMachine<TEnum>(initialState, transitions, entryListeners, exitListeners);
             }
         }
+    }
+
+    public enum transitionType
+    {
+        Start,
+        End,
     }
 }

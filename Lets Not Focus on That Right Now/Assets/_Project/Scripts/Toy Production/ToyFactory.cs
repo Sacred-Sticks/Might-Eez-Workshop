@@ -43,7 +43,7 @@ public static class ToyFactory
         return new ProcessedMaterial(baseMaterial.Material);
     }
 
-    public static ToyPart MoldToy(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
+    public static ToyPart ConstructToyPart(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
     {
         return new ToyPart(processedMaterial.Material, toySection);
     }
