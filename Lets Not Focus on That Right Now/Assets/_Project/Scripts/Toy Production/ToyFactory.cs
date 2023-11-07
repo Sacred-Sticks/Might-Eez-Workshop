@@ -10,7 +10,7 @@ public static class ToyFactory
         {
             Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, materialType),
             Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, materialType),
-            Workstation.WorkstationCategory.Molder => new MoldMaterial(delays.mold, toyPart, materialType),
+            Workstation.WorkstationCategory.Constructor => new MoldMaterial(delays.mold, toyPart, materialType),
             Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, materialType),
             Workstation.WorkstationCategory.Output => new Output(delays.output),
             _ => ICommand.CreateDefaultCommand(),
@@ -25,7 +25,7 @@ public static class ToyFactory
         {
             Workstation.WorkstationCategory.Dispenser => new WorkstationInventory<Resource, BaseMaterial>(0, materialType),
             Workstation.WorkstationCategory.Processor => new WorkstationInventory<BaseMaterial, ProcessedMaterial>(1, materialType),
-            Workstation.WorkstationCategory.Molder => new WorkstationInventory<ProcessedMaterial, ToyPart>(1, materialType),
+            Workstation.WorkstationCategory.Constructor => new WorkstationInventory<ProcessedMaterial, ToyPart>(1, materialType),
             Workstation.WorkstationCategory.Assembler => new WorkstationInventory<ToyPart, Toy>(numToyParts, materialType),
             Workstation.WorkstationCategory.Output => new WorkstationInventory<Toy, Resource>(numToyParts, materialType),
             _ => WorkstationInventory.CreateDefaultInventory(),

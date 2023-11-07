@@ -15,7 +15,7 @@ public class Workstation : MonoBehaviour
     {
         Dispenser,
         Processor,
-        Molder,
+        Constructor,
         Assembler,
         Output,
     }

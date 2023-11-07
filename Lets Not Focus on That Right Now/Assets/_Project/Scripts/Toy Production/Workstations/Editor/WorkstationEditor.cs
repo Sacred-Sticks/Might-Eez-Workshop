@@ -38,7 +38,7 @@ public class WorkstationEditor : Editor
             case Workstation.WorkstationCategory.Processor:
                 desiredProperties.Add(materialType);
                 break;
-            case Workstation.WorkstationCategory.Molder:
+            case Workstation.WorkstationCategory.Constructor:
                 desiredProperties.Add(materialType);
                 desiredProperties.Add(toyPart);
                 break;
