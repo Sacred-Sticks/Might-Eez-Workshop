@@ -27,12 +27,14 @@ public class CustomerSpwaner : MonoBehaviour
 
     private Toy CreateToyTemplate()
     {
-        var leftArm = GenerateToyPart(ToyPart.ToySection.Arm);
-        var rightArm = GenerateToyPart(ToyPart.ToySection.Arm);
-        var leftLeg = GenerateToyPart(ToyPart.ToySection.Leg);
-        var rightLeg = GenerateToyPart(ToyPart.ToySection.Leg);
-        var torso = GenerateToyPart(ToyPart.ToySection.Torso);
-        var head = GenerateToyPart(ToyPart.ToySection.Head);
+        var materialType = GetRandomEnumValue<Resource.MaterialType>();
+        
+        var leftArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
+        var rightArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
+        var leftLeg = GenerateToyPart(ToyPart.ToySection.Leg, materialType);
+        var rightLeg = GenerateToyPart(ToyPart.ToySection.Leg, materialType);
+        var torso = GenerateToyPart(ToyPart.ToySection.Torso, materialType);
+        var head = GenerateToyPart(ToyPart.ToySection.Head, materialType);
         var parts = new[]
         {
             leftArm,
@@ -45,11 +47,10 @@ public class CustomerSpwaner : MonoBehaviour
         return ToyFactory.AssembleToy(parts);
     }
 
-    private ToyPart GenerateToyPart(ToyPart.ToySection toySection)
+    private ToyPart GenerateToyPart(ToyPart.ToySection toySection, Resource.MaterialType materialType)
     {
-        var materialType = GetRandomEnumValue<Resource.MaterialType>();
-        // get random color here too
-        var baseMaterial = ToyFactory.CreateMaterial(materialType);
+        var colorType = GetRandomEnumValue<Resource.MaterialColor>();
+        var baseMaterial = ToyFactory.CreateMaterial(materialType, colorType);
         var processedMaterial = ToyFactory.ProcessMaterial(baseMaterial);
         return ToyFactory.ConstructToyPart(processedMaterial, toySection);
     }
