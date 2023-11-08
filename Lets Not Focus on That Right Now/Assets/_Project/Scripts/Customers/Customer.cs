@@ -2,13 +2,17 @@
 using Kickstarter.StateControllers;
 using UnityEngine;
 
-public class Customer : MonoBehaviour
+public class Customer : Observable
 {
-    private Toy desiredToy;
+    public Toy DesiredToy { get; private set; }
     private float waitingTime;
     private float price;
+    
+    public float RemainingTime { get; private set; }
 
-    private enum CustomerStatus
+    private const float timeStep = 1;
+
+    public enum CustomerStatus
     {
         Arriving,
         Waiting,
@@ -22,12 +26,12 @@ public class Customer : MonoBehaviour
     #region Unity Events
     private void Start()
     {
-        var part0 = desiredToy.ToyParts[0];
-        var part1 = desiredToy.ToyParts[1];
-        var part2 = desiredToy.ToyParts[2];
-        var part3 = desiredToy.ToyParts[3];
-        var part4 = desiredToy.ToyParts[4];
-        var part5 = desiredToy.ToyParts[5];
+        var part0 = DesiredToy.ToyParts[0];
+        var part1 = DesiredToy.ToyParts[1];
+        var part2 = DesiredToy.ToyParts[2];
+        var part3 = DesiredToy.ToyParts[3];
+        var part4 = DesiredToy.ToyParts[4];
+        var part5 = DesiredToy.ToyParts[5];
         Debug.Log($"Customer Created with Toy Order:\n"
                 + $"({part0.Part}, {part0.Material}, {part0.Color}), "
                 + $"({part1.Part}, {part1.Material}, {part1.Color}), "
@@ -43,28 +47,34 @@ public class Customer : MonoBehaviour
             .WithTransition(CustomerStatus.Waiting, CustomerStatus.OrderCancelled)
             .WithTransition(CustomerStatus.OrderFulfilled, CustomerStatus.Leaving)
             .WithTransition(CustomerStatus.OrderCancelled, CustomerStatus.Leaving)
+            .WithStateListener(CustomerStatus.Arriving, transitionType.Start, Arrive)
             .WithStateListener(CustomerStatus.Waiting, transitionType.Start, PlaceOrder)
             .WithStateListener(CustomerStatus.OrderFulfilled, transitionType.Start, PayForOrder)
             .WithStateListener(CustomerStatus.OrderCancelled, transitionType.Start, DeclineOrder)
-            .WithStateListener(CustomerStatus.Leaving, transitionType.End, Leave)
+            .WithStateListener(CustomerStatus.Leaving, transitionType.Start, Leave)
             .Build();
     }
     #endregion
 
     #region State Changes
+    private void Arrive()
+    {
+        NotifyObservers(stateMachine.CurrentState); // state is Arriving
+    }
+    
     private void PlaceOrder()
     {
-        
+        NotifyObservers(stateMachine.CurrentState); // state is Waiting
     }
 
     private void PayForOrder()
     {
-        
+        NotifyObservers(stateMachine.CurrentState); // state is OrderFilled
     }
 
     private void DeclineOrder()
     {
-        
+        NotifyObservers(stateMachine.CurrentState); // state is OrderDenied
     }
 
     private void Leave()
@@ -76,8 +86,18 @@ public class Customer : MonoBehaviour
 
     private IEnumerator CustomerTimer()
     {
-        yield return new WaitForSeconds(waitingTime);
-        stateMachine.CurrentState = CustomerStatus.OrderCancelled;
+        for (;;)
+        {
+            yield return new WaitForSeconds(timeStep);
+            RemainingTime -= timeStep;
+            if (RemainingTime <= 0)
+                stateMachine.CurrentState = CustomerStatus.OrderCancelled;
+        }
+    }
+
+    public void FillOrder()
+    {
+        stateMachine.CurrentState = CustomerStatus.OrderFulfilled;
     }
     
     #region Sub Classes
@@ -85,7 +105,7 @@ public class Customer : MonoBehaviour
     {
         private Toy targetToy;
         private float waitingTime;
-        private float price;
+        private float toyPrice;
 
         public Builder WithPatience(float timeToWait)
         {
@@ -95,13 +115,13 @@ public class Customer : MonoBehaviour
         
         public Builder WithToy(Toy toy)
         {
-            this.targetToy = toy;
+            targetToy = toy;
             return this;
         }
 
         public Builder WithPrice(float price)
         {
-            this.price = price;
+            toyPrice = price;
             return this;
         }
 
@@ -109,8 +129,8 @@ public class Customer : MonoBehaviour
         {
             var customer =  targetGameObject.AddComponent<Customer>();
             customer.waitingTime = waitingTime;
-            customer.desiredToy = targetToy;
-            customer.price = price;
+            customer.DesiredToy = targetToy;
+            customer.price = toyPrice;
             return customer;
         }
     }

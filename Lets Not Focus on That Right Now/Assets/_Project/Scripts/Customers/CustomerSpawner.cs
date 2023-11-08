@@ -15,12 +15,13 @@ public class CustomerSpwaner : MonoBehaviour
     {
         for (;;)
         {
-            var customer = Instantiate(customerPrefab, transform.position, transform.rotation);
-            new Customer.Builder()
+            var customerGO = Instantiate(customerPrefab, transform.position, transform.rotation);
+            var customer = new Customer.Builder()
                 .WithPatience(Random.Range(customerPatienceRange.Minimum, customerPatienceRange.Maximum))
                 .WithPrice(Random.Range(customerPriceRange.Minimum, customerPriceRange.Maximum))
                 .WithToy(CreateToyTemplate())
-                .Build(customer);
+                .Build(customerGO);
+            OrderManager.AddCustomer(customer);
             yield return new WaitForSeconds(1 / Random.Range(spawnRate.Minimum, spawnRate.Maximum));
         }
     }
