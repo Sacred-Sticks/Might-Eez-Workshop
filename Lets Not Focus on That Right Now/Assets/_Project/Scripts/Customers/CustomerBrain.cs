@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class NavAgent : MonoBehaviour, IObserver<Customer.CustomerStatus>
+public class CustomerBrain : MonoBehaviour, IObserver<Customer.CustomerStatus>
 {
     [SerializeField] private Vector3Reference orderStationLocation;
     [SerializeField] private Vector3Reference waitingLocation;
