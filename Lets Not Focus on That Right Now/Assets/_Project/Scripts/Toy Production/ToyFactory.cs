@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using UnityEngine;
 
 public static class ToyFactory
 {
     public static ICommand CreateWorkstationCommand(Workstation.WorkstationCategory workstationType, Resource.MaterialType material, Resource.MaterialColor color,
         ToyPart.ToySection toyPart, (int dispense, int process, int mold, int assemble, int output) delays)
     {
-        var command = workstationType switch
+        return workstationType switch
         {
             Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, material, color),
             Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, material),
@@ -15,7 +14,6 @@ public static class ToyFactory
             Workstation.WorkstationCategory.Output => new Output(delays.output),
             _ => ICommand.CreateDefaultCommand(),
         };
-        return command;
     }
 
     public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts,
@@ -43,7 +41,7 @@ public static class ToyFactory
         return new ProcessedMaterial(baseMaterial.Material, baseMaterial.Color);
     }
 
-    public static ToyPart MoldToy(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
+    public static ToyPart ConstructToyPart(ProcessedMaterial processedMaterial, ToyPart.ToySection toySection)
     {
         return new ToyPart(processedMaterial.Material, processedMaterial.Color, toySection);
     }
@@ -55,7 +53,6 @@ public static class ToyFactory
 
     public static void OutputToy(Toy toy)
     {
-        Debug.Log($"Output: {toy}: {toy.ToyParts[0].Color}");
-        Debug.Log($"Output: {toy}: {toy.ToyParts[1].Color}");
+        OrderManager.FillOrder(toy);
     }
 }
