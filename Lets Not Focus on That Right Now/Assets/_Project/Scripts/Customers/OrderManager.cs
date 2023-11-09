@@ -1,15 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class OrderManager : MonoBehaviour
+public class OrderManager
 {
-    private static List<Customer> activeCustomers;
-
-    private void Start()
-    {
-        activeCustomers = new List<Customer>();
-    }
+    private static readonly List<Customer> activeCustomers = new List<Customer>();
 
     public static void AddCustomer(Customer customer)
     {
