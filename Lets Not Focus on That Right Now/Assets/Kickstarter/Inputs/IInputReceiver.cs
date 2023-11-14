@@ -4,8 +4,8 @@ namespace Kickstarter.Inputs
 {
     public interface IInputReceiver
     {
-        public void SubscribeToInputs(Player player);
+        public bool SubscribeToInputs(Player player);
 
-        public void UnsubscribeToInputs(Player player);
+        public bool UnsubscribeToInputs(Player player);
     }
 }

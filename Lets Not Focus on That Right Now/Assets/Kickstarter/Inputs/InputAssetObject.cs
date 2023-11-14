@@ -92,10 +92,10 @@ namespace Kickstarter.Inputs
             actionMap.Add(device, action);
         }
 
-        public void SubscribeToInputAction(Action<TType> action, Player.PlayerIdentifier playerRegister)
+        public bool SubscribeToInputAction(Action<TType> action, Player.PlayerIdentifier playerRegister)
         {
             if (!actionsRegistered)
-                return;
+                return false;
             const int noInputs = -1;
             int playerIndex = playerRegister switch
             {
@@ -108,17 +108,18 @@ namespace Kickstarter.Inputs
                 _ => throw new ArgumentOutOfRangeException(nameof(playerRegister), playerRegister, null),
             };
             if (playerIndex == noInputs)
-                return;
+                return false;
             if (playerIndex > devices.Length - 1)
-                return;
+                return false;
             if (devices[playerIndex] != null)
                 actionMap[devices[playerIndex]] += action;
+            return true;
         }
 
-        public void UnsubscribeToInputAction(Action<TType> action, Player.PlayerIdentifier playerRegister)
+        public bool UnsubscribeToInputAction(Action<TType> action, Player.PlayerIdentifier playerRegister)
         {
             if (!actionsRegistered)
-                return;
+                return false;
             const int noInputs = -1;
             int playerIndex = playerRegister switch
             {
@@ -131,11 +132,12 @@ namespace Kickstarter.Inputs
                 _ => throw new ArgumentOutOfRangeException(nameof(playerRegister), playerRegister, null),
             };
             if (playerIndex == noInputs)
-                return;
+                return false;
             if (playerIndex > devices.Length - 1)
-                return;
+                return false;
             if (devices[playerIndex] != null)
                 actionMap[devices[playerIndex]] -= action;
+            return true;
         }
 
         public override void AddDevice(InputDevice device)

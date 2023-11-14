@@ -51,8 +51,8 @@ namespace Kickstarter.Identification
         {
             foreach (var inputReceiver in inputReceivers.Where(i => !registeredListeners.Contains(i)))
             {
-                inputReceiver.SubscribeToInputs(this);
-                registeredListeners.Add(inputReceiver);
+                if (inputReceiver.SubscribeToInputs(this))
+                    registeredListeners.Add(inputReceiver);
             }
         }
 
@@ -60,8 +60,8 @@ namespace Kickstarter.Identification
         {
             foreach (var inputReceiver in inputReceivers.Where(i => registeredListeners.Contains(i)))
             {
-                inputReceiver.UnsubscribeToInputs(this);
-                registeredListeners.Remove(inputReceiver);
+                if (inputReceiver.UnsubscribeToInputs(this))
+                    registeredListeners.Remove(inputReceiver);
             }
         }
     }

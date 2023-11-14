@@ -39,14 +39,14 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
     #endregion
     
     #region Inputs
-    public void SubscribeToInputs(Player player)
+    public bool SubscribeToInputs(Player player)
     {
-        giveTakeInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return giveTakeInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
-    public void UnsubscribeToInputs(Player player)
+    public bool UnsubscribeToInputs(Player player)
     {
-        giveTakeInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return giveTakeInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     private void OnInteractInputChange(float input)
