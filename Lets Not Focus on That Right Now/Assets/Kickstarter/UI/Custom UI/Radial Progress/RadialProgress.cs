@@ -2,7 +2,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace MyUILibrary
+namespace Kickstarter.UI
 {
 
     // An element that displays progress inside a partially filled circle
