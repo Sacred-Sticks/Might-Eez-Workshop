@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Kickstarter.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,14 +8,16 @@ using UnityEngine.UIElements;
 public class OrderListUI : MonoBehaviour
 {
     [SerializeField] private string listName;
-    [SerializeField] private RadialProgress hi;
 
     private const string parentElementClass = "order-template";
     private const string timerClass = "timer";
-    private const string timerBackgroundClass = "timer-background";
     private const string toyPartsClass = "toy-parts";
     private const string toyPartClass = "toy-part";
-    
+    private const string legClass = "leg";
+    private const string torsoClass = "torso";
+    private const string armClass = "arm";
+    private const string headClass = "head";
+
     private UIDocument document;
     private VisualElement ordersRoot;
 
@@ -24,31 +27,46 @@ public class OrderListUI : MonoBehaviour
         ordersRoot = document.rootVisualElement.Q<VisualElement>(listName);
     }
 
-    private void Start()
+    private IEnumerator Start()
+    {
+        for (;;)
+        {
+            InjectNewOrder();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    private void InjectNewOrder()
     {
         var parentElement = new VisualElement();
         parentElement.AddToClassList(parentElementClass);
-        
+
         var timerElement = new RadialProgress();
         timerElement.AddToClassList(timerClass);
-        timerElement.progress = 50;
-        
-        var timerBackground = new VisualElement();
-        timerBackground.AddToClassList(timerClass);
-        timerBackground.AddToClassList(timerBackgroundClass);
-        
+        timerElement.progress = 0;
+
         var pieces = new VisualElement();
         pieces.AddToClassList(toyPartsClass);
-        
-        //parentElement.contentContainer.Add(timerBackground);
+
+        AddToyPart(legClass, pieces);
+        AddToyPart(legClass, pieces);
+        AddToyPart(torsoClass, pieces);
+        AddToyPart(armClass, pieces);
+        AddToyPart(armClass, pieces);
+        AddToyPart(headClass, pieces);
+
         parentElement.contentContainer.Add(timerElement);
         parentElement.contentContainer.Add(pieces);
 
         ordersRoot.hierarchy.Add(parentElement);
     }
 
-    [Serializable] private class RadialProgressCircle
+    private static void AddToyPart(string partClass, VisualElement parent)
     {
-        [SerializeField] private string name;
+        var toyPart = new VisualElement();
+        toyPart.AddToClassList(toyPartClass);
+        toyPart.AddToClassList(partClass);
+
+        parent.hierarchy.Add(toyPart);
     }
 }

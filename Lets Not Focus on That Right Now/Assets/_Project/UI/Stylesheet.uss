@@ -1,3 +1,12 @@
+.root {
+    flex-grow: 1;
+    width: 20%;
+    margin-top: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 2.5%;
+    margin-left: 2.5%;
+}
+
 .order-template {
     flex-grow: 0;
     flex-direction: row;
@@ -6,7 +15,7 @@
     align-self: center;
     flex-wrap: nowrap;
     align-items: flex-start;
-    height: auto;
+    height: 10%;
     width: 100%;
     border-top-width: 2px;
     border-right-width: 2px;
@@ -24,8 +33,10 @@
     padding-right: 2px;
     padding-bottom: 2px;
     padding-left: 2px;
-    margin-top: 0.5px;
-    margin-bottom: 0.5px;
+    margin-top: 2.856%;
+    margin-bottom: 2.856%;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .timer-background {
@@ -58,8 +69,8 @@
 }
 
 .timer {
-    width: 17px;
-    height: 17px;
+    width: 20%;
+    height: 100%;
     margin-right: 5px;
 }
 

@@ -1133,7 +1133,7 @@ GameObject:
   - component: {fileID: 1376976924}
   - component: {fileID: 1376976923}
   m_Layer: 0
-  m_Name: UI
+  m_Name: Order List UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
