@@ -30,27 +30,26 @@ namespace Kickstarter.UI
 
         // These are USS class names for the control overall and the label.
         public static readonly string ussClassName = "radial-progress";
-        public static readonly string ussLabelClassName = "radial-progress__label";
+        // public static readonly string ussLabelClassName = "radial-progress__label";
 
         // These objects allow C# code to access custom USS properties.
-        static CustomStyleProperty<Color> s_TrackColor = new CustomStyleProperty<Color>("--track-color");
-        static CustomStyleProperty<Color> s_ProgressColor = new CustomStyleProperty<Color>("--progress-color");
+        private static readonly CustomStyleProperty<Color> s_TrackColor = new CustomStyleProperty<Color>("--track-color");
+        private static readonly CustomStyleProperty<Color> s_ProgressColor = new CustomStyleProperty<Color>("--progress-color");
 
         // These are the meshes this control uses.
-        EllipseMesh m_TrackMesh;
-        EllipseMesh m_ProgressMesh;
+        private readonly EllipseMesh m_TrackMesh;
+        private readonly EllipseMesh m_ProgressMesh;
 
         // This is the label that displays the percentage.
-        Label m_Label;
+        // Label m_Label;
 
         // This is the number of outer vertices to generate the circle.
-        const int k_NumSteps = 200;
+        private const int k_NumSteps = 200;
 
         // This is the number that the Label displays as a percentage.
-        float m_Progress;
+        private float m_Progress;
 
         // A value between 0 and 100
-
         public float progress
         {
             // The progress property is exposed in C#.
@@ -60,7 +59,7 @@ namespace Kickstarter.UI
                 // Whenever the progress property changes, MarkDirtyRepaint() is named. This causes a call to the
                 // generateVisualContents callback.
                 m_Progress = value;
-                m_Label.text = Mathf.Clamp(Mathf.Round(value), 0, 100) + "%";
+                // m_Label.text = Mathf.Clamp(Mathf.Round(value), 0, 100) + "%";
                 MarkDirtyRepaint();
             }
         }
@@ -69,9 +68,9 @@ namespace Kickstarter.UI
         public RadialProgress()
         {
             // Create a Label, add a USS class name, and add it to this visual tree.
-            m_Label = new Label();
-            m_Label.AddToClassList(ussLabelClassName);
-            Add(m_Label);
+            // m_Label = new Label();
+            // m_Label.AddToClassList(ussLabelClassName);
+            // Add(m_Label);
 
             // Create meshes for the track and the progress.
             m_ProgressMesh = new EllipseMesh(k_NumSteps);
@@ -89,15 +88,15 @@ namespace Kickstarter.UI
             progress = 0.0f;
         }
 
-        static void CustomStylesResolved(CustomStyleResolvedEvent evt)
+        private static void CustomStylesResolved(EventBase evt)
         {
-            RadialProgress element = (RadialProgress)evt.currentTarget;
+            var element = (RadialProgress)evt.currentTarget;
             element.UpdateCustomStyles();
         }
 
         // After the custom colors are resolved, this method uses them to color the meshes and (if necessary) repaint
         // the control.
-        void UpdateCustomStyles()
+        private void UpdateCustomStyles()
         {
             if (customStyle.TryGetValue(s_ProgressColor, out var progressColor))
             {
@@ -114,9 +113,9 @@ namespace Kickstarter.UI
         }
 
         // The GenerateVisualContent() callback method calls DrawMeshes().
-        static void GenerateVisualContent(MeshGenerationContext context)
+        private static void GenerateVisualContent(MeshGenerationContext context)
         {
-            RadialProgress element = (RadialProgress)context.visualElement;
+            var element = (RadialProgress)context.visualElement;
             element.DrawMeshes(context);
         }
 
@@ -124,7 +123,7 @@ namespace Kickstarter.UI
         // "track" ring (in grey) and the progress ring (in green). It then passes the geometry to the MeshWriteData
         // object, as returned by the MeshGenerationContext.Allocate() method. For the "progress" mesh, only a slice of
         // the index arrays is used to progressively reveal parts of the mesh.
-        void DrawMeshes(MeshGenerationContext context)
+        private void DrawMeshes(MeshGenerationContext context)
         {
             float halfWidth = contentRect.width * 0.5f;
             float halfHeight = contentRect.height * 0.5f;

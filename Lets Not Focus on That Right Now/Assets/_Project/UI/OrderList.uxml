@@ -1,50 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=5c5be8f1210157b48bf6260d1db93ba2&amp;type=3#Stylesheet" />
+    <Style src="project://database/Assets/_Project/UI/RadialProgress.uss?fileID=7433441132597879392&amp;guid=ae72cd754c0346d4490509ce8939fd98&amp;type=3#RadialProgress" />
     <ui:VisualElement name="Root" style="flex-grow: 1; width: 20%; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;">
         <ui:VisualElement name="template" class="order-template">
-            <ui:VisualElement name="timer-background" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/_Project/circle.png?fileID=2800000&amp;guid=22a611aca4f2fec44b0d939b24d53d3e&amp;type=3#circle&apos;); width: 20px; height: 17px; margin-right: 3px;" />
+            <Kickstarter.UI.RadialProgress name="timer" class="timer" />
             <ui:VisualElement name="toy-parts" style="flex-grow: 1; justify-content: space-between; flex-direction: row; align-self: center; flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%;">
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
+                <ui:VisualElement name="part" class="toy-part leg" />
+                <ui:VisualElement name="part" class="toy-part leg" />
+                <ui:VisualElement name="part" class="toy-part torso" />
+                <ui:VisualElement name="part" class="toy-part arm" />
+                <ui:VisualElement name="part" class="toy-part arm" />
+                <ui:VisualElement name="part" class="toy-part head" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="template" class="order-template">
-            <ui:VisualElement name="timer-background" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/_Project/circle.png?fileID=2800000&amp;guid=22a611aca4f2fec44b0d939b24d53d3e&amp;type=3#circle&apos;); width: 20px; height: 17px; margin-right: 3px;" />
-            <ui:VisualElement name="toy-parts" style="flex-grow: 1; justify-content: space-between; flex-direction: row; align-self: center; flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%;">
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="template" class="order-template">
-            <ui:VisualElement name="timer-background" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/_Project/circle.png?fileID=2800000&amp;guid=22a611aca4f2fec44b0d939b24d53d3e&amp;type=3#circle&apos;); width: 20px; height: 17px; margin-right: 3px;" />
-            <ui:VisualElement name="toy-parts" style="flex-grow: 1; justify-content: space-between; flex-direction: row; align-self: center; flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%;">
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="template" class="order-template">
-            <ui:VisualElement name="timer-background" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/_Project/circle.png?fileID=2800000&amp;guid=22a611aca4f2fec44b0d939b24d53d3e&amp;type=3#circle&apos;); width: 20px; height: 17px; margin-right: 3px;" />
-            <ui:VisualElement name="toy-parts" style="flex-grow: 1; justify-content: space-between; flex-direction: row; align-self: center; flex-wrap: nowrap; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%;">
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-                <ui:VisualElement name="part" class="toy-part" />
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:ListView focusable="false" name="list" show-border="true" show-add-remove-footer="false" reorder-mode="Simple" style="justify-content: center;" />
     </ui:VisualElement>
 </ui:UXML>

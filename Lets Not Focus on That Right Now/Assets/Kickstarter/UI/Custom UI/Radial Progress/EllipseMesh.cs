@@ -5,24 +5,23 @@ namespace Kickstarter.UI
 {
     public class EllipseMesh
     {
-        int m_NumSteps;
-        float m_Width;
-        float m_Height;
-        Color m_Color;
-        float m_BorderSize;
-        bool m_IsDirty;
+        private int m_NumSteps;
+        private float m_Width;
+        private float m_Height;
+        private Color m_Color;
+        private float m_BorderSize;
         public Vertex[] vertices { get; private set; }
         public ushort[] indices { get; private set; }
 
         public EllipseMesh(int numSteps)
         {
             m_NumSteps = numSteps;
-            m_IsDirty = true;
+            isDirty = true;
         }
 
         public void UpdateMesh()
         {
-            if (!m_IsDirty)
+            if (!isDirty)
                 return;
 
             int numVertices = numSteps * 2;
@@ -65,18 +64,17 @@ namespace Kickstarter.UI
                 indices[i * 6 + 5] = (ushort)((i == 0) ? vertices.Length - 1 : (i - 1) * 2 + 1); // previous inner vertex
             }
 
-            m_IsDirty = false;
+            isDirty = false;
         }
 
-        public bool isDirty => m_IsDirty;
+        public bool isDirty { get; private set; }
 
-        void CompareAndWrite(ref float field, float newValue)
+        private void CompareAndWrite(ref float field, float newValue)
         {
-            if (Mathf.Abs(field - newValue) > float.Epsilon)
-            {
-                m_IsDirty = true;
-                field = newValue;
-            }
+            if (!(Mathf.Abs(field - newValue) > float.Epsilon))
+                return;
+            isDirty = true;
+            field = newValue;
         }
 
         public int numSteps
@@ -84,7 +82,7 @@ namespace Kickstarter.UI
             get => m_NumSteps;
             set
             {
-                m_IsDirty = value != m_NumSteps;
+                isDirty = value != m_NumSteps;
                 m_NumSteps = value;
             }
         }
@@ -106,7 +104,7 @@ namespace Kickstarter.UI
             get => m_Color;
             set
             {
-                m_IsDirty = value != m_Color;
+                isDirty = value != m_Color;
                 m_Color = value;
             }
         }

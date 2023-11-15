@@ -1,0 +1,5 @@
+.radial-progress {
+    --track-color: rgb(46, 132, 24);
+    --progress-color: rgb(255, 0, 0);
+    --percentage-color: white;
+}

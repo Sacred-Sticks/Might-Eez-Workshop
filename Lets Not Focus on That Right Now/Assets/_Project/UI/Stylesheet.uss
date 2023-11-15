@@ -1,14 +1,3 @@
-.toy-part {
-    flex-grow: 0;
-    background-image: url('project://database/Assets/_Project/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
-    width: 5px;
-    height: 5px;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: auto;
-}
-
 .order-template {
     flex-grow: 0;
     flex-direction: row;
@@ -37,4 +26,51 @@
     padding-left: 2px;
     margin-top: 0.5px;
     margin-bottom: 0.5px;
+}
+
+.timer-background {
+    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+.toy-parts {
+    flex-grow: 1;
+    justify-content: space-between;
+    flex-direction: row;
+    align-self: center;
+    flex-wrap: nowrap;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 100%;
+}
+
+.toy-part {
+    flex-grow: 0;
+    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
+    width: 5px;
+    height: 5px;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: auto;
+}
+
+.timer {
+    width: 17px;
+    height: 17px;
+    margin-right: 5px;
+}
+
+.leg {
+}
+
+.arm {
+}
+
+.torso {
+}
+
+.head {
 }
