@@ -29,7 +29,7 @@ public class OrderListUI : MonoBehaviour
 
     private IEnumerator Start()
     {
-        for (;;)
+        for (int i = 0; i < 8; i++)
         {
             InjectNewOrder();
             yield return new WaitForSeconds(1);
@@ -48,12 +48,12 @@ public class OrderListUI : MonoBehaviour
         var pieces = new VisualElement();
         pieces.AddToClassList(toyPartsClass);
 
-        AddToyPart(legClass, pieces);
-        AddToyPart(legClass, pieces);
-        AddToyPart(torsoClass, pieces);
-        AddToyPart(armClass, pieces);
-        AddToyPart(armClass, pieces);
-        AddToyPart(headClass, pieces);
+        AddToyPart(pieces, new[] { toyPartClass, legClass, });
+        AddToyPart(pieces, new[] { toyPartClass, legClass, });
+        AddToyPart(pieces, new[] { toyPartClass, torsoClass, });
+        AddToyPart(pieces, new[] { toyPartClass, armClass, });
+        AddToyPart(pieces, new[] { toyPartClass, armClass, });
+        AddToyPart(pieces, new[] { toyPartClass, headClass, });
 
         parentElement.contentContainer.Add(timerElement);
         parentElement.contentContainer.Add(pieces);
@@ -61,12 +61,5 @@ public class OrderListUI : MonoBehaviour
         ordersRoot.hierarchy.Add(parentElement);
     }
 
-    private static void AddToyPart(string partClass, VisualElement parent)
-    {
-        var toyPart = new VisualElement();
-        toyPart.AddToClassList(toyPartClass);
-        toyPart.AddToClassList(partClass);
-
-        parent.hierarchy.Add(toyPart);
-    }
+    private static void AddToyPart(VisualElement parent, string[] partClasses) => parent.CreateChild(partClasses);
 }
