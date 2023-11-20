@@ -1,5 +1,6 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Kickstarter.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,13 +14,11 @@ public class OrderListUI : MonoBehaviour
     private const string timerClass = "timer";
     private const string toyPartsClass = "toy-parts";
     private const string toyPartClass = "toy-part";
-    private const string legClass = "leg";
-    private const string torsoClass = "torso";
-    private const string armClass = "arm";
-    private const string headClass = "head";
 
     private UIDocument document;
-    private VisualElement ordersRoot;
+    private static VisualElement ordersRoot;
+
+    private static readonly Dictionary<Customer, VisualElement> customerOrders = new Dictionary<Customer, VisualElement>();
 
     private void Awake()
     {
@@ -27,16 +26,7 @@ public class OrderListUI : MonoBehaviour
         ordersRoot = document.rootVisualElement.Q<VisualElement>(listName);
     }
 
-    private IEnumerator Start()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            InjectNewOrder();
-            yield return new WaitForSeconds(1);
-        }
-    }
-
-    private void InjectNewOrder()
+    public static void InjectNewOrder(Customer customer)
     {
         var parentElement = new VisualElement();
         parentElement.AddToClassList(parentElementClass);
@@ -48,17 +38,33 @@ public class OrderListUI : MonoBehaviour
         var pieces = new VisualElement();
         pieces.AddToClassList(toyPartsClass);
 
-        AddToyPart(pieces, new[] { toyPartClass, legClass, });
-        AddToyPart(pieces, new[] { toyPartClass, legClass, });
-        AddToyPart(pieces, new[] { toyPartClass, torsoClass, });
-        AddToyPart(pieces, new[] { toyPartClass, armClass, });
-        AddToyPart(pieces, new[] { toyPartClass, armClass, });
-        AddToyPart(pieces, new[] { toyPartClass, headClass, });
+        AddToyParts(pieces, customer.DesiredToy.ToyParts);
 
-        parentElement.contentContainer.Add(timerElement);
-        parentElement.contentContainer.Add(pieces);
+        parentElement.AddChild(timerElement);
+        parentElement.AddChild(pieces);
 
-        ordersRoot.hierarchy.Add(parentElement);
+        ordersRoot.AddChild(parentElement);
+        
+        customerOrders.Add(customer, parentElement);
+    }
+
+    public static void RemoveOrder(Customer customer)
+    {
+        if (!customerOrders.ContainsKey(customer))
+            return;
+        ordersRoot.hierarchy.Remove(customerOrders[customer]);
+        customerOrders.Remove(customer);
+    }
+    
+    private static void AddToyParts(VisualElement parent, ToyPart[] parts)
+    {
+        foreach (var toyPart in parts)
+        {
+            string colorClass = toyPart.Color.ToString();
+            string partClass = toyPart.Part.ToString();
+            string materialClass = toyPart.Material.ToString();
+            AddToyPart(parent, new[] { toyPartClass, colorClass, partClass, materialClass, });
+        }
     }
 
     private static void AddToyPart(VisualElement parent, string[] partClasses) => parent.CreateChild(partClasses);

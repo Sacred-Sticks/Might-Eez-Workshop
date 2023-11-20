@@ -9,7 +9,7 @@ public static class ToyFactory
         {
             Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, material, color),
             Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, material),
-            Workstation.WorkstationCategory.Constructor => new MoldMaterial(delays.mold, toyPart, material),
+            Workstation.WorkstationCategory.Constructor => new ConstructMaterial(delays.mold, toyPart, material),
             Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, material),
             Workstation.WorkstationCategory.Output => new Output(delays.output),
             _ => ICommand.CreateDefaultCommand(),
@@ -51,8 +51,8 @@ public static class ToyFactory
         return new Toy(toyParts, toyParts.FirstOrDefault().Material);
     }
 
-    public static void OutputToy(Toy toy)
+    public static bool OutputToy(Toy toy)
     {
-        OrderManager.FillOrder(toy);
+        return OrderManager.FillOrder(toy);
     }
 }

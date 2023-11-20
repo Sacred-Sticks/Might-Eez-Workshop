@@ -669,9 +669,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 5846705292375899196, guid: d7da1145308dc7745b083208aa925d1e,
     type: 3}
-  spawnRate:
-    minimum: 0.25
-    maximum: 0.5
+  spawnDelay:
+    minimum: 20
+    maximum: 40
   customerPatienceRange:
     minimum: 10
     maximum: 25

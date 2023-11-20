@@ -60,9 +60,8 @@
 
 .toy-part {
     flex-grow: 0;
-    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
-    width: 5px;
-    height: 5px;
+    width: 10px;
+    height: 10px;
     flex-wrap: nowrap;
     flex-direction: column;
     justify-content: flex-start;
@@ -75,15 +74,55 @@
     margin-right: 5px;
 }
 
-.leg {
+.Leg {
+    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-down@2x');
 }
 
-.arm {
+.Arm {
+    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-4528830608231651361&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-up@2x');
 }
 
-.torso {
+.Torso {
     background-color: rgba(0, 0, 0, 0);
+    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=4456449167576933126&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#check-dash@2x');
 }
 
-.head {
+.Head {
+    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
+}
+
+.Red {
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+.Yellow {
+    -unity-background-image-tint-color: rgb(255, 255, 0);
+}
+
+.Green {
+    -unity-background-image-tint-color: rgb(0, 255, 0);
+}
+
+.Blue {
+    -unity-background-image-tint-color: rgb(0, 0, 255);
+}
+
+.Purple {
+    -unity-background-image-tint-color: rgb(156, 0, 255);
+}
+
+.White {
+}
+
+.Black {
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.Plastic {
+}
+
+.Wood {
+}
+
+.Metal {
 }

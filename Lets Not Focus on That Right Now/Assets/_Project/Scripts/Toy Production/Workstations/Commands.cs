@@ -71,9 +71,9 @@ public class ProcessMaterial : ICommand
     }
 }
 
-public class MoldMaterial : ICommand
+public class ConstructMaterial : ICommand
 {
-    public MoldMaterial(int millisecondsDelay, ToyPart.ToySection toySection, Resource.MaterialType materialType)
+    public ConstructMaterial(int millisecondsDelay, ToyPart.ToySection toySection, Resource.MaterialType materialType)
     {
         MillisecondsDelay = millisecondsDelay;
         toyPart = toySection;
@@ -136,7 +136,9 @@ public class Output : ICommand
         workstation.Inventory.ClearInputs<Toy>();
         workstation.WorkstationActive = true;
         await Task.Delay(MillisecondsDelay);
-        ToyFactory.OutputToy(input);
+        bool correctOrder = ToyFactory.OutputToy(input);
+        if (!correctOrder)
+            workstation.Inventory.SetOutput(input);
         workstation.WorkstationActive = false;
     }
 }

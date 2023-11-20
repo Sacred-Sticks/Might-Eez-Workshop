@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class CustomerSpwaner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
-    [SerializeField] private Range<float, float> spawnRate;
+    [SerializeField] private Range<float, float> spawnDelay;
     [Space]
     [SerializeField] private Range<float, float> customerPatienceRange;
     [SerializeField] private Range<float, float> customerPriceRange;
@@ -22,7 +22,7 @@ public class CustomerSpwaner : MonoBehaviour
                 .WithToy(CreateToyTemplate())
                 .Build(customerGO);
             OrderManager.AddCustomer(customer);
-            yield return new WaitForSeconds(1 / Random.Range(spawnRate.Minimum, spawnRate.Maximum));
+            yield return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
         }
     }
 
