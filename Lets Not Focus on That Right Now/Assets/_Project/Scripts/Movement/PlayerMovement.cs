@@ -1,23 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using Kickstarter.Identification;
 using Kickstarter.Inputs;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IInputReceiver
 {
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float moveSpeed = 3;
     [SerializeField] private Vector2Input playerInputs;
-    [SerializeField] private float deadzone;
-
-    [SerializeField]
-    private float slerpRatio;
+    [SerializeField, Range(0, 1),] private float deadzone = 0.5f;
+    [SerializeField, Range(0, 1),] private float slerpRatio;
+    
+    private Rigidbody rb;
     private Vector3 rawInputs;
 
-    void FixedUpdate()
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
     {
         MovePlayer();
     }

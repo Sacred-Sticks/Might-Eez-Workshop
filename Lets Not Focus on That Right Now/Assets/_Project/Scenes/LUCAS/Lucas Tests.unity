@@ -670,8 +670,8 @@ MonoBehaviour:
   customerPrefab: {fileID: 5846705292375899196, guid: d7da1145308dc7745b083208aa925d1e,
     type: 3}
   spawnDelay:
-    minimum: 20
-    maximum: 40
+    minimum: 2
+    maximum: 3
   customerPatienceRange:
     minimum: 10
     maximum: 25

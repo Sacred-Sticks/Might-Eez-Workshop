@@ -17,5 +17,5 @@ MonoBehaviour:
   - name: WASD
     up: <Keyboard>/w
     down: <Keyboard>/s
-    left: Keyboard/a
-    right: Keyboard/d
+    left: <Keyboard>/a
+    right: <Keyboard>/d
