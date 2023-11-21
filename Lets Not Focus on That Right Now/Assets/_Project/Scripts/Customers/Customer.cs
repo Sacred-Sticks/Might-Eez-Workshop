@@ -33,13 +33,6 @@ public class Customer : Observable
         var part3 = DesiredToy.ToyParts[3];
         var part4 = DesiredToy.ToyParts[4];
         var part5 = DesiredToy.ToyParts[5];
-        Debug.Log($"Customer Created with Toy Order:\n"
-                + $"({part0.Part}, {part0.Material}, {part0.Color}), "
-                + $"({part1.Part}, {part1.Material}, {part1.Color}), "
-                + $"({part2.Part}, {part2.Material}, {part2.Color}), "
-                + $"({part3.Part}, {part3.Material}, {part3.Color}), "
-                + $"({part4.Part}, {part4.Material}, {part4.Color}), "
-                + $"({part5.Part}, {part5.Material}, {part5.Color})");
         
         stateMachine = new StateMachine<CustomerStatus>.Builder()
             .WithInitialState(CustomerStatus.Arriving)

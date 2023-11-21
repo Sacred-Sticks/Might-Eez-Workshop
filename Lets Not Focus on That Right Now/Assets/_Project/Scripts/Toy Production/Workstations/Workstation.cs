@@ -3,8 +3,8 @@ using UnityEngine;
 public class Workstation : MonoBehaviour
 {
     [SerializeField] private WorkstationCategory workstationType;
-    [SerializeField] private BaseMaterial.MaterialType materialType;
-    [SerializeField] private BaseMaterial.MaterialColor materialColor;
+    [SerializeField] private Resource.MaterialType materialType;
+    [SerializeField] private Resource.MaterialColor materialColor;
     [Space]
     [SerializeField] private ToyPart.ToySection toyPart;
     [Space]
