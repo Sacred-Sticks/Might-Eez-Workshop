@@ -17,6 +17,7 @@ public interface ICommand
 public class DefaultCommand : ICommand
 {
     public int MillisecondsDelay { get; } = 0;
+
     public async Task Activate(Workstation workstation)
     {
         await Task.Delay(MillisecondsDelay);
@@ -130,6 +131,7 @@ public class Output : ICommand
 
     private Toy input;
     public int MillisecondsDelay { get; }
+
     public async Task Activate(Workstation workstation)
     {
         input = workstation.Inventory.GetInputs<Toy>().FirstOrDefault();
@@ -139,6 +141,25 @@ public class Output : ICommand
         bool correctOrder = ToyFactory.OutputToy(input);
         if (!correctOrder)
             workstation.Inventory.SetOutput(input);
+        workstation.WorkstationActive = false;
+    }
+}
+
+public class Garbage : ICommand
+{
+    public Garbage(int millisecondsDelay)
+    {
+        MillisecondsDelay = millisecondsDelay;
+    }
+
+    public int MillisecondsDelay { get; }
+    private Resource input;
+
+    public async Task Activate(Workstation workstation)
+    {
+        workstation.Inventory.ClearInputs<Resource>();
+        workstation.WorkstationActive = true;
+        await Task.Delay(MillisecondsDelay);
         workstation.WorkstationActive = false;
     }
 }

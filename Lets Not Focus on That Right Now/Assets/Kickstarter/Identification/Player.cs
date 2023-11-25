@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Kickstarter.Identification
 {
+    [SelectionBase]
     public class Player : MonoBehaviour
     {
         public enum PlayerIdentifier

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[SelectionBase]
 public class Workstation : MonoBehaviour
 {
     [SerializeField] private WorkstationCategory workstationType;
@@ -19,25 +20,17 @@ public class Workstation : MonoBehaviour
         Constructor,
         Assembler,
         Output,
+        Garbage,
     }
 
     private ICommand command;
     public WorkstationInventory Inventory { get; private set; }
     public bool WorkstationActive { get; set; }
 
-    #region Workstation Delays
-    private const int dispenseDelay = 1000;
-    private const int meltDelay = 1000;
-    private const int moldDelay = 1000;
-    private const int assembleDelay = 1000;
-    private const int outputDelay = 0;
-    #endregion
-
     #region Unity Events
     private void Awake()
     {
-        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, 
-            toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay, outputDelay));
+        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, toyPart);
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts, materialType);
     }
     #endregion
