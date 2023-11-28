@@ -9,9 +9,10 @@ namespace Kickstarter.StateControllers
             Dictionary<TEnum, List<Action>> entryListeners, Dictionary<TEnum, List<Action>> exitListeners)
         {
             stateTransitions = transitions;
-            CurrentState = initialState;
             this.entryListeners = entryListeners;
             this.exitListeners = exitListeners;
+            CurrentState = initialState;
+            this.entryListeners[CurrentState].ForEach(l => l());
         }
 
         private readonly Dictionary<TEnum, List<TEnum>> stateTransitions;

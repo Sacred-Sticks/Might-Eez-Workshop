@@ -2,10 +2,18 @@
 using Kickstarter.Observer;
 using Kickstarter.StateControllers;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[SelectionBase]
 public class Customer : Observable
 {
+
+    private NavMeshAgent agent;
+    
     public Toy DesiredToy { get; private set; }
+    private Vector3 orderPosition;
+    private Vector3 waitingPosition;
     private float waitingTime;
     private float price;
     
@@ -25,6 +33,11 @@ public class Customer : Observable
     private StateMachine<CustomerStatus> stateMachine;
 
     #region Unity Events
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
     private void Start()
     {
         var part0 = DesiredToy.ToyParts[0];
@@ -35,7 +48,6 @@ public class Customer : Observable
         var part5 = DesiredToy.ToyParts[5];
         
         stateMachine = new StateMachine<CustomerStatus>.Builder()
-            .WithInitialState(CustomerStatus.Arriving)
             .WithTransition(CustomerStatus.Arriving, CustomerStatus.Waiting)
             .WithTransition(CustomerStatus.Waiting, CustomerStatus.OrderFulfilled)
             .WithTransition(CustomerStatus.Waiting, CustomerStatus.OrderCancelled)
@@ -46,33 +58,48 @@ public class Customer : Observable
             .WithStateListener(CustomerStatus.OrderFulfilled, transitionType.Start, PayForOrder)
             .WithStateListener(CustomerStatus.OrderCancelled, transitionType.Start, DeclineOrder)
             .WithStateListener(CustomerStatus.Leaving, transitionType.Start, Leave)
+            .WithInitialState(CustomerStatus.Arriving)
             .Build();
+    }
+
+    private void Update()
+    {
+        if (agent.remainingDistance > agent.stoppingDistance)
+            return;
+        stateMachine.CurrentState = stateMachine.CurrentState switch
+        {
+            CustomerStatus.Arriving => CustomerStatus.Waiting,
+            _ => stateMachine.CurrentState,
+        };
     }
     #endregion
 
     #region State Changes
     private void Arrive()
     {
-        NotifyObservers(stateMachine.CurrentState); // state is Arriving
+        NotifyObservers(CustomerStatus.Arriving);
+        agent.SetDestination(orderPosition);
     }
     
     private void PlaceOrder()
     {
-        NotifyObservers(stateMachine.CurrentState); // state is Waiting
+        NotifyObservers(CustomerStatus.Waiting);
+        agent.SetDestination(waitingPosition);
     }
 
     private void PayForOrder()
     {
-        NotifyObservers(stateMachine.CurrentState); // state is OrderFilled
+        NotifyObservers(CustomerStatus.OrderFulfilled);
     }
 
     private void DeclineOrder()
     {
-        NotifyObservers(stateMachine.CurrentState); // state is OrderDenied
+        NotifyObservers(CustomerStatus.OrderCancelled); // state is OrderDenied
     }
 
     private void Leave()
     {
+        NotifyObservers(CustomerStatus.Leaving);
         StopAllCoroutines();
         Destroy(gameObject);
     }
@@ -100,6 +127,8 @@ public class Customer : Observable
         private Toy targetToy;
         private float waitingTime;
         private float toyPrice;
+        private Vector3 orderPosition;
+        private Vector3 waitingPosition;
 
         public Builder WithPatience(float timeToWait)
         {
@@ -119,12 +148,26 @@ public class Customer : Observable
             return this;
         }
 
+        public Builder WithOrderPosition(Vector3 position)
+        {
+            orderPosition = position;
+            return this;
+        }
+
+        public Builder WithWaitingPosition(Vector3 position)
+        {
+            waitingPosition = position;
+            return this;
+        }
+
         public Customer Build(GameObject targetGameObject)
         {
             var customer =  targetGameObject.AddComponent<Customer>();
             customer.waitingTime = waitingTime;
             customer.DesiredToy = targetToy;
             customer.price = toyPrice;
+            customer.orderPosition = orderPosition;
+            customer.waitingPosition = waitingPosition;
             return customer;
         }
     }
