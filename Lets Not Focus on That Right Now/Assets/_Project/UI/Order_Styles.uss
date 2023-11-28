@@ -6,6 +6,7 @@
     padding-right: 0.5%;
     padding-bottom: 2.5%;
     padding-left: 0.5%;
+    height: 100%;
 }
 
 .order-template {
@@ -31,7 +32,7 @@
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
     padding-top: 2px;
-    padding-right: 5px;
+    padding-right: 10px;
     padding-bottom: 2px;
     padding-left: 5px;
     margin-top: 3.125%;
@@ -51,12 +52,10 @@
     padding-bottom: 0;
     padding-left: 0;
     width: 100%;
+    align-items: center;
 }
 
 .toy-part {
-    flex-grow: 0;
-    width: 50px;
-    height: 50px;
     flex-wrap: nowrap;
     flex-direction: column;
     justify-content: flex-start;
@@ -70,19 +69,27 @@
 }
 
 .Leg {
-    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=4154780841294389669&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-down');
+    background-image: url('project://database/Assets/_Project/Assets/UI/minitronLEG-L.svg?fileID=7388822144124034973&guid=af46de5eac2469b47bd21c75212857da&type=3#minitronLEG-L');
+    width: 25px;
+    height: 64px;
 }
 
 .Arm {
-    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=1169890249420208065&guid=dbcea28dc537f5d4f88c52d70c63016e&type=3#arrow-up');
+    background-image: url('project://database/Assets/_Project/Assets/UI/minitronARM_L.svg?fileID=7388822144124034973&guid=cfa8f5224990f014ea0fe23ba0405c84&type=3#minitronARM_L');
+    width: 30px;
+    height: 65px;
 }
 
 .Torso {
-    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=4456449167576933126&guid=dbcea28dc537f5d4f88c52d70c63016e&type=3#check-dash@2x');
+    background-image: url('project://database/Assets/_Project/Assets/UI/minitronBODY.svg?fileID=7388822144124034973&guid=fe41c4e68f9510b459eb239dcec8c425&type=3#minitronBODY');
+    width: 40px;
+    height: 65px;
 }
 
 .Head {
-    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
+    background-image: url('project://database/Assets/_Project/Assets/UI/minitronHEAD.svg?fileID=7388822144124034973&guid=20b536fe726b5434bbe5ffe5f0744c29&type=3#minitronHEAD');
+    width: 43px;
+    height: 43px;
 }
 
 .Red {
@@ -109,7 +116,7 @@
 }
 
 .Black {
-    -unity-background-image-tint-color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(50, 50, 50);
 }
 
 .Plastic {
