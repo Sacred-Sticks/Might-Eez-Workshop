@@ -15,7 +15,7 @@
     justify-content: space-between;
     align-self: center;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
     height: 10%;
     width: 100%;
     border-top-width: 2px;
@@ -31,18 +31,13 @@
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
     padding-top: 2px;
-    padding-right: 2px;
+    padding-right: 5px;
     padding-bottom: 2px;
-    padding-left: 2px;
-    margin-top: 2.856%;
-    margin-bottom: 2.856%;
+    padding-left: 5px;
+    margin-top: 3.125%;
+    margin-bottom: 3.125%;
     margin-right: 0;
     margin-left: 0;
-}
-
-.timer-background {
-    background-image: url('project://database/Assets/_Project/Assets/circle.png?fileID=2800000&guid=22a611aca4f2fec44b0d939b24d53d3e&type=3#circle');
-    -unity-background-image-tint-color: rgb(255, 0, 0);
 }
 
 .toy-parts {
@@ -60,8 +55,8 @@
 
 .toy-part {
     flex-grow: 0;
-    width: 10px;
-    height: 10px;
+    width: 50px;
+    height: 50px;
     flex-wrap: nowrap;
     flex-direction: column;
     justify-content: flex-start;
@@ -70,21 +65,20 @@
 
 .timer {
     width: 20%;
-    height: 100%;
+    height: 85%;
     margin-right: 5px;
 }
 
 .Leg {
-    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-down@2x');
+    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=4154780841294389669&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-down');
 }
 
 .Arm {
-    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-4528830608231651361&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#arrow-up@2x');
+    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=1169890249420208065&guid=dbcea28dc537f5d4f88c52d70c63016e&type=3#arrow-up');
 }
 
 .Torso {
-    background-color: rgba(0, 0, 0, 0);
-    background-image: url('project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=4456449167576933126&guid=4786ae9532d246f48a2f93aedb36dd16&type=3#check-dash@2x');
+    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=4456449167576933126&guid=dbcea28dc537f5d4f88c52d70c63016e&type=3#check-dash@2x');
 }
 
 .Head {
