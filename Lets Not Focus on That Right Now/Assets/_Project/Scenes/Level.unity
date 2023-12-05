@@ -189,7 +189,7 @@ PrefabInstance:
     - target: {fileID: 6136595983686783341, guid: ab0fcb996f97d2d49844f5c974625919,
         type: 3}
       propertyPath: materialColor
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1747,12 +1747,27 @@ PrefabInstance:
     - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: spawnDelay.maximum
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: spawnDelay.minimum
-      value: 20
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelayDepreciation
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.<Maximum>k__BackingField
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.<Minimum>k__BackingField
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
@@ -2785,7 +2800,7 @@ PrefabInstance:
     - target: {fileID: 6136595983686783341, guid: ab0fcb996f97d2d49844f5c974625919,
         type: 3}
       propertyPath: materialColor
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -56,12 +56,15 @@ public class Workstation : Observable
     private void Start()
     {
         NotifyObservers(Status.Idle);
+        if (workstationType == WorkstationCategory.Dispenser)
+            Activate();
     }
     #endregion
 
     public void Activate()
     {
-        if (WorkstationActive != Status.Active)
-            command?.Activate(this);
+        if (WorkstationActive == Status.Active)
+            return;
+        command?.Activate(this);
     }
 }
