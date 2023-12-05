@@ -1744,6 +1744,16 @@ PrefabInstance:
       propertyPath: waitingPosition.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.maximum
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.minimum
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4166,6 +4176,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6261921529983020224, guid: 0d5a4c55ab8331f4999b8919c6d4b2d6,
+        type: 3}
+      propertyPath: interactionOffset.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -6261921529983020224, guid: 0d5a4c55ab8331f4999b8919c6d4b2d6,
+        type: 3}
+      propertyPath: maxInteractionDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 383929438600520783, guid: 0d5a4c55ab8331f4999b8919c6d4b2d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4221,6 +4241,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4566443441570671464, guid: 0d5a4c55ab8331f4999b8919c6d4b2d6,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425364943628475373, guid: 0d5a4c55ab8331f4999b8919c6d4b2d6,
+        type: 3}
+      propertyPath: resourceExchangeInput
+      value: 
+      objectReference: {fileID: 11400000, guid: b18e41c3599ecab479944c5e6f70b410,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

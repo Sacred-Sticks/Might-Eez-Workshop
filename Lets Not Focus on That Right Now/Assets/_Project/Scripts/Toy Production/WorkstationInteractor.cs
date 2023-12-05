@@ -42,7 +42,7 @@ public class WorkstationInteractor : MonoBehaviour, IInputReceiver
         var ray = new Ray(transform.position + interactionOffset, transform.forward);
         if (!Physics.Raycast(ray, out var hit, maxInteractionDistance))
             return null;
-        hit.transform.root.TryGetComponent(out Workstation workstation);
+        hit.transform.parent.TryGetComponent(out Workstation workstation);
         return workstation;
     }
 }

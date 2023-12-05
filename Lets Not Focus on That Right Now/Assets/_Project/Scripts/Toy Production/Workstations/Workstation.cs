@@ -1,7 +1,8 @@
+using Kickstarter.Observer;
 using UnityEngine;
 
 [SelectionBase]
-public class Workstation : MonoBehaviour
+public class Workstation : Observable
 {
     [SerializeField] private WorkstationCategory workstationType;
     [SerializeField] private Resource.MaterialType materialType;
@@ -23,9 +24,27 @@ public class Workstation : MonoBehaviour
         Garbage,
     }
 
+    public enum Status
+    {
+        Idle,
+        Active,
+        Completed,
+    }
+
     private ICommand command;
     public WorkstationInventory Inventory { get; private set; }
-    public bool WorkstationActive { get; set; }
+    private Status workstationActive;
+    public Status WorkstationActive
+    {
+        get => workstationActive;
+        set
+        {
+            if (workstationActive == value)
+                return;
+            workstationActive = value;
+            NotifyObservers(workstationActive);
+        }
+    }
 
     #region Unity Events
     private void Awake()
@@ -33,11 +52,16 @@ public class Workstation : MonoBehaviour
         command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, toyPart);
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts, materialType);
     }
+
+    private void Start()
+    {
+        NotifyObservers(Status.Idle);
+    }
     #endregion
 
     public void Activate()
     {
-        if (!WorkstationActive)
+        if (WorkstationActive != Status.Active)
             command?.Activate(this);
     }
 }

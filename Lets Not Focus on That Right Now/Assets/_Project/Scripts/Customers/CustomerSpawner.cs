@@ -17,7 +17,7 @@ public class CustomerSpwaner : MonoBehaviour
     {
         for (;;)
         {
-            var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation);
+            var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation, transform);
             var customer = new Customer.Builder()
                 .WithPatience(Random.Range(customerPatienceRange.Minimum, customerPatienceRange.Maximum))
                 .WithPrice(Random.Range(customerPriceRange.Minimum, customerPriceRange.Maximum))
