@@ -2,10 +2,10 @@
 
 public static class ToyFactory
 {
-    private const int dispenseDelay = 1000;
-    private const int processDelay = 1000;
-    private const int constructDelay = 1000;
-    private const int assembleDelay = 1000;
+    private const int dispenseDelay = 10000;
+    private const int processDelay = 5000;
+    private const int constructDelay = 3000;
+    private const int assembleDelay = 10000;
     private const int outputDelay = 0;
     private const int garbageDelay = 0;
     

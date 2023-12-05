@@ -1,40 +1,15 @@
 using Kickstarter.Identification;
-using Kickstarter.Inputs;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-public class WorkstationInteractor : MonoBehaviour, IInputReceiver
+public class WorkstationInteractor : MonoBehaviour
 {
-    [SerializeField] private FloatInput interactInput;
-    [Space]
     [SerializeField] private Vector3 interactionOffset;
     [SerializeField] private float maxInteractionDistance;
 
-    #region Inputs
-    public bool SubscribeToInputs(Player player)
+    public void Interact(Workstation workstation)
     {
-        return interactInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
-    }
-
-    public bool UnsubscribeToInputs(Player player)
-    {
-        return interactInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
-    }
-
-    private void OnInteractInputChange(float input)
-    {
-        if (input < 1)
-            return;
-
-        Interact();
-    }
-    #endregion
-
-    private void Interact()
-    {
-        var workstation = FindWorkstation();
-        if (workstation)
-            workstation.Activate();
+        workstation.Activate();
     }
     
     public Workstation FindWorkstation()

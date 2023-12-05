@@ -15,7 +15,7 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
 
     private WorkstationInteractor workstationInteractor;
 
-    private Resource resource;
+    private Resource resource = new Resource();
     public Resource Resource
     {
         get => resource;
@@ -61,14 +61,18 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
         if (resource.GetType() == typeof(Resource))
         {
             TakeResource(workstation);
+            workstationInteractor.Interact(workstation);
             return;
         }
         GiveResource(workstation);
+        workstationInteractor.Interact(workstation);
     }
     #endregion
 
     private void TakeResource(Workstation workstation)
     {
+        if (workstation.WorkstationActive == Workstation.Status.Active)
+            return;
         var genericType = workstation.Inventory.GetType().GetGenericArguments()[1];
         switch (genericType)
         {

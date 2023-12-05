@@ -7,6 +7,7 @@ public class CustomerSpwaner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private Range<float, float> spawnDelay;
+    [SerializeField] private float spawnDelayDepreciation;
     [Space]
     [SerializeField] private Vector3 orderPosition;
     [SerializeField] private Vector3 waitingPosition;
@@ -27,13 +28,16 @@ public class CustomerSpwaner : MonoBehaviour
                 .Build(customerGO);
             OrderManager.AddCustomer(customer);
             yield return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
+            spawnDelay.Minimum -= spawnDelayDepreciation;
+            spawnDelay.Maximum -= spawnDelayDepreciation;
+
         }
     }
 
     private Toy CreateToyTemplate()
     {
         var materialType = GetRandomEnumValue<Resource.MaterialType>();
-        
+
         var leftArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
         var rightArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
         var leftLeg = GenerateToyPart(ToyPart.ToySection.Leg, materialType);
@@ -70,10 +74,7 @@ public class CustomerSpwaner : MonoBehaviour
     [Serializable]
     private class Range<TType1, TType2>
     {
-        [SerializeField] private TType1 minimum;
-        [SerializeField] private TType2 maximum;
-
-        public TType1 Minimum => minimum;
-        public TType2 Maximum => maximum;
+        [field: SerializeField] public TType1 Minimum { get; set; }
+        [field: SerializeField] public TType2 Maximum { get; set; }
     }
 }

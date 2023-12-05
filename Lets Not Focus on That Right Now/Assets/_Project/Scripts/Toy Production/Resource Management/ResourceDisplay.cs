@@ -44,10 +44,10 @@ public class ResourceDisplay : MonoBehaviour, IServiceProvider
     {
         int displayIndex = resource.GetType() switch
         {
-            {} when resource.GetType() == typeof(BaseMaterial) => 0,
-            {} when resource.GetType() == typeof(ProcessedMaterial) => 1,
-            {} when resource.GetType() == typeof(ToyPart) => 2,
-            {} when resource.GetType() == typeof(Toy) => 3,
+            not null when resource.GetType() == typeof(BaseMaterial) => 0,
+            not null when resource.GetType() == typeof(ProcessedMaterial) => 1,
+            not null when resource.GetType() == typeof(ToyPart) => 2,
+            not null when resource.GetType() == typeof(Toy) => 3,
             _ => -1,
         };
 
