@@ -7,6 +7,7 @@ public class WorkstationInteractor : MonoBehaviour, IInputReceiver
 {
     [SerializeField] private FloatInput interactInput;
     [Space]
+    [SerializeField] private Vector3 interactionOffset;
     [SerializeField] private float maxInteractionDistance;
 
     #region Inputs
@@ -38,10 +39,10 @@ public class WorkstationInteractor : MonoBehaviour, IInputReceiver
     
     public Workstation FindWorkstation()
     {
-        var ray = new Ray(transform.position, transform.forward);
+        var ray = new Ray(transform.position + interactionOffset, transform.forward);
         if (!Physics.Raycast(ray, out var hit, maxInteractionDistance))
             return null;
-        hit.transform.TryGetComponent(out Workstation workstation);
+        hit.transform.parent.TryGetComponent(out Workstation workstation);
         return workstation;
     }
 }

@@ -27,8 +27,6 @@ public class Resource
     public enum MaterialType
     {
         Plastic,
-        Metal,
-        Wood,
     }
 }
 

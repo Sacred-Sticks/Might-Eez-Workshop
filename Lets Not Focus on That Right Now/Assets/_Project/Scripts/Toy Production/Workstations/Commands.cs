@@ -17,6 +17,7 @@ public interface ICommand
 public class DefaultCommand : ICommand
 {
     public int MillisecondsDelay { get; } = 0;
+
     public async Task Activate(Workstation workstation)
     {
         await Task.Delay(MillisecondsDelay);
@@ -39,10 +40,10 @@ public class Dispense : ICommand
 
     public async Task Activate(Workstation workstation)
     {
-        workstation.WorkstationActive = true;
+        workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.CreateMaterial(material, color));
-        workstation.WorkstationActive = false;
+        workstation.WorkstationActive = Workstation.Status.Completed;
     }
 }
 
@@ -64,10 +65,10 @@ public class ProcessMaterial : ICommand
         workstation.Inventory.ClearInputs<BaseMaterial>();
         if (input.Material != material)
             return;
-        workstation.WorkstationActive = true;
+        workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.ProcessMaterial(input));
-        workstation.WorkstationActive = false;
+        workstation.WorkstationActive = Workstation.Status.Completed;
     }
 }
 
@@ -91,10 +92,10 @@ public class ConstructMaterial : ICommand
         workstation.Inventory.ClearInputs<ProcessedMaterial>();
         if (input.Material != material)
             return;
-        workstation.WorkstationActive = true;
+        workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.ConstructToyPart(input, toyPart));
-        workstation.WorkstationActive = false;
+        workstation.WorkstationActive = Workstation.Status.Completed;
     }
 }
 
@@ -114,10 +115,10 @@ public class Assemble : ICommand
         if (inputs.Length != workstation.Inventory.NumInputs)
             return;
         workstation.Inventory.ClearInputs<ToyPart>();
-        workstation.WorkstationActive = true;
+        workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
         workstation.Inventory.SetOutput(ToyFactory.AssembleToy(inputs));
-        workstation.WorkstationActive = false;
+        workstation.WorkstationActive = Workstation.Status.Completed;
     }
 }
 
@@ -130,15 +131,35 @@ public class Output : ICommand
 
     private Toy input;
     public int MillisecondsDelay { get; }
+
     public async Task Activate(Workstation workstation)
     {
         input = workstation.Inventory.GetInputs<Toy>().FirstOrDefault();
         workstation.Inventory.ClearInputs<Toy>();
-        workstation.WorkstationActive = true;
+        workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
         bool correctOrder = ToyFactory.OutputToy(input);
         if (!correctOrder)
             workstation.Inventory.SetOutput(input);
-        workstation.WorkstationActive = false;
+        workstation.WorkstationActive = Workstation.Status.Idle;
+    }
+}
+
+public class Garbage : ICommand
+{
+    public Garbage(int millisecondsDelay)
+    {
+        MillisecondsDelay = millisecondsDelay;
+    }
+
+    public int MillisecondsDelay { get; }
+    private Resource input;
+
+    public async Task Activate(Workstation workstation)
+    {
+        workstation.Inventory.ClearInputs<Resource>();
+        workstation.WorkstationActive = Workstation.Status.Active;
+        await Task.Delay(MillisecondsDelay);
+        workstation.WorkstationActive = Workstation.Status.Idle;
     }
 }

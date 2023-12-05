@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(WorkstationInteractor))]
 public class ResourceCarrier : MonoBehaviour, IInputReceiver
 {
-    [SerializeField] private FloatInput giveTakeInput;
+    [SerializeField] private FloatInput resourceExchangeInput;
     [Space]
     [Header("Outgoing Events")]
     [SerializeField] private Service showCurrentResource;
@@ -41,12 +41,12 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
     #region Inputs
     public bool SubscribeToInputs(Player player)
     {
-        return giveTakeInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return resourceExchangeInput.SubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     public bool UnsubscribeToInputs(Player player)
     {
-        return giveTakeInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
+        return resourceExchangeInput.UnsubscribeToInputAction(OnInteractInputChange, player.PlayerID);
     }
 
     private void OnInteractInputChange(float input)
@@ -91,10 +91,17 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
         }
         resource ??= new Resource();
         Resource = resource;
+        workstation.WorkstationActive = Workstation.Status.Idle;
     }
 
     private void GiveResource(Workstation workstation)
     {
+        if (workstation.Inventory.InputType == typeof(Resource))
+        {
+            workstation.Inventory.AddResource(resource);
+            Resource = new Resource();
+            return;
+        }
         bool giveSuccessful = resource switch
         {
             Toy toy => workstation.Inventory.AddInput(toy),

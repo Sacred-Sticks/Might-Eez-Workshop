@@ -1,6 +1,8 @@
+using Kickstarter.Observer;
 using UnityEngine;
 
-public class Workstation : MonoBehaviour
+[SelectionBase]
+public class Workstation : Observable
 {
     [SerializeField] private WorkstationCategory workstationType;
     [SerializeField] private Resource.MaterialType materialType;
@@ -19,32 +21,47 @@ public class Workstation : MonoBehaviour
         Constructor,
         Assembler,
         Output,
+        Garbage,
+    }
+
+    public enum Status
+    {
+        Idle,
+        Active,
+        Completed,
     }
 
     private ICommand command;
     public WorkstationInventory Inventory { get; private set; }
-    public bool WorkstationActive { get; set; }
-
-    #region Workstation Delays
-    private const int dispenseDelay = 1000;
-    private const int meltDelay = 1000;
-    private const int moldDelay = 1000;
-    private const int assembleDelay = 1000;
-    private const int outputDelay = 0;
-    #endregion
+    private Status workstationActive;
+    public Status WorkstationActive
+    {
+        get => workstationActive;
+        set
+        {
+            if (workstationActive == value)
+                return;
+            workstationActive = value;
+            NotifyObservers(workstationActive);
+        }
+    }
 
     #region Unity Events
     private void Awake()
     {
-        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, 
-            toyPart, (dispenseDelay, meltDelay, moldDelay, assembleDelay, outputDelay));
+        command = ToyFactory.CreateWorkstationCommand(workstationType, materialType, materialColor, toyPart);
         Inventory = ToyFactory.CreateWorkstationInventory(workstationType, numToyParts, materialType);
+    }
+
+    private void Start()
+    {
+        NotifyObservers(Status.Idle);
     }
     #endregion
 
     public void Activate()
     {
-        if (!WorkstationActive)
+        if (WorkstationActive != Status.Active)
             command?.Activate(this);
     }
 }

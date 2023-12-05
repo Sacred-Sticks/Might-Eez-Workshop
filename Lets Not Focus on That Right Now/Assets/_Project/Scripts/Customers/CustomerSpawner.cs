@@ -8,6 +8,8 @@ public class CustomerSpwaner : MonoBehaviour
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private Range<float, float> spawnDelay;
     [Space]
+    [SerializeField] private Vector3 orderPosition;
+    [SerializeField] private Vector3 waitingPosition;
     [SerializeField] private Range<float, float> customerPatienceRange;
     [SerializeField] private Range<float, float> customerPriceRange;
 
@@ -15,10 +17,12 @@ public class CustomerSpwaner : MonoBehaviour
     {
         for (;;)
         {
-            var customerGO = Instantiate(customerPrefab, transform.position, transform.rotation);
+            var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation, transform);
             var customer = new Customer.Builder()
                 .WithPatience(Random.Range(customerPatienceRange.Minimum, customerPatienceRange.Maximum))
                 .WithPrice(Random.Range(customerPriceRange.Minimum, customerPriceRange.Maximum))
+                .WithOrderPosition(orderPosition)
+                .WithWaitingPosition(waitingPosition)
                 .WithToy(CreateToyTemplate())
                 .Build(customerGO);
             OrderManager.AddCustomer(customer);

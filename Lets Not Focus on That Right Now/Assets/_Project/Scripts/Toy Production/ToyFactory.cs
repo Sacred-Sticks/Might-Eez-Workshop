@@ -2,22 +2,29 @@
 
 public static class ToyFactory
 {
+    private const int dispenseDelay = 1000;
+    private const int processDelay = 1000;
+    private const int constructDelay = 1000;
+    private const int assembleDelay = 1000;
+    private const int outputDelay = 0;
+    private const int garbageDelay = 0;
+    
     public static ICommand CreateWorkstationCommand(Workstation.WorkstationCategory workstationType, Resource.MaterialType material, Resource.MaterialColor color,
-        ToyPart.ToySection toyPart, (int dispense, int process, int mold, int assemble, int output) delays)
+        ToyPart.ToySection toyPart)
     {
         return workstationType switch
         {
-            Workstation.WorkstationCategory.Dispenser => new Dispense(delays.dispense, material, color),
-            Workstation.WorkstationCategory.Processor => new ProcessMaterial(delays.process, material),
-            Workstation.WorkstationCategory.Constructor => new ConstructMaterial(delays.mold, toyPart, material),
-            Workstation.WorkstationCategory.Assembler => new Assemble(delays.assemble, material),
-            Workstation.WorkstationCategory.Output => new Output(delays.output),
+            Workstation.WorkstationCategory.Dispenser => new Dispense(dispenseDelay, material, color),
+            Workstation.WorkstationCategory.Processor => new ProcessMaterial(processDelay, material),
+            Workstation.WorkstationCategory.Constructor => new ConstructMaterial(constructDelay, toyPart, material),
+            Workstation.WorkstationCategory.Assembler => new Assemble(assembleDelay, material),
+            Workstation.WorkstationCategory.Output => new Output(outputDelay),
+            Workstation.WorkstationCategory.Garbage => new Garbage(garbageDelay),
             _ => ICommand.CreateDefaultCommand(),
         };
     }
 
-    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts,
-        Resource.MaterialType materialType)
+    public static WorkstationInventory CreateWorkstationInventory(Workstation.WorkstationCategory workstationType, int numToyParts, Resource.MaterialType materialType)
     {
         WorkstationInventory inventory = workstationType switch
         {
@@ -26,6 +33,7 @@ public static class ToyFactory
             Workstation.WorkstationCategory.Constructor => new WorkstationInventory<ProcessedMaterial, ToyPart>(1, materialType),
             Workstation.WorkstationCategory.Assembler => new WorkstationInventory<ToyPart, Toy>(numToyParts, materialType),
             Workstation.WorkstationCategory.Output => new WorkstationInventory<Toy, Resource>(numToyParts, materialType),
+            Workstation.WorkstationCategory.Garbage => new WorkstationInventory<Resource, Resource>(1, materialType),
             _ => WorkstationInventory.CreateDefaultInventory(),
         };
         return inventory;

@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public abstract class WorkstationInventory
 {
-    protected WorkstationInventory(int numInputs, Resource.MaterialType materialType)
+    protected WorkstationInventory(int numInputs, Resource.MaterialType materialType, Type inputType, Type outputType)
     {
         NumInputs = numInputs;
         this.materialType = materialType;
+        InputType = inputType;
+        OutputType = outputType;
     }
 
     public static WorkstationInventory<Resource, Resource> CreateDefaultInventory()
@@ -15,6 +17,8 @@ public abstract class WorkstationInventory
     }
 
     public int NumInputs { get; }
+    public Type InputType { get; private set; }
+    public Type OutputType { get; private set; }
     private Resource.MaterialType materialType { get; }
 
     public void ClearInputs<T>() where T : Resource
@@ -42,6 +46,12 @@ public abstract class WorkstationInventory
             inputs.Add(resource);
             return true;
         }
+    }
+
+    public void AddResource(Resource resource)
+    {
+        var inputs = GetInputs<Resource>();
+        inputs?.Add(resource);
     }
 
     public List<T> GetInputs<T>() where T : Resource
@@ -75,7 +85,7 @@ public abstract class WorkstationInventory
 
 public sealed class WorkstationInventory<TInput, TOutput> : WorkstationInventory where TInput : Resource where TOutput : Resource
 {
-    public WorkstationInventory(int numInputs, Resource.MaterialType materialType) : base(numInputs, materialType)
+    public WorkstationInventory(int numInputs, Resource.MaterialType materialType) : base(numInputs, materialType, typeof(TInput), typeof(TOutput))
     {
         Inputs = new List<TInput>();
     }
