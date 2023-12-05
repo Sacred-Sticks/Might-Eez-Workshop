@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 5049911338400433045, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
       propertyPath: numToyParts
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5049911338400433045, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}

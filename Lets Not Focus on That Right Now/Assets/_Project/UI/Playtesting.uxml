@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="flex-grow: 1;">
+        <ui:VisualElement name="upper" style="flex-grow: 1; flex-direction: row; justify-content: space-between; font-size: 22px; color: rgb(255, 255, 255); padding-right: 6%; align-self: auto; align-items: center; padding-left: 43%; padding-top: 0; padding-bottom: 0;">
+            <ui:Label tabindex="-1" text="Leg Printer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="leg" />
+            <ui:Label tabindex="-1" text="Arm Printer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="arm" />
+            <ui:Label tabindex="-1" text="Torso Printer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="torso" />
+            <ui:Label tabindex="-1" text="Head Printer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="head" />
+            <ui:VisualElement name="spacer" style="flex-grow: 1;" />
+            <ui:Label tabindex="-1" text="Material Processors" parse-escape-sequences="true" display-tooltip-when-elided="true" name="material_processors" />
+        </ui:VisualElement>
+        <ui:VisualElement name="upper_middle" style="flex-grow: 1; color: rgb(255, 255, 255); font-size: 22px; align-items: flex-start; flex-direction: row; padding-left: 36%; padding-top: 0; padding-right: 0; padding-bottom: 0;">
+            <ui:Label tabindex="-1" text="Toy Output" parse-escape-sequences="true" display-tooltip-when-elided="true" name="output" />
+        </ui:VisualElement>
+        <ui:VisualElement name="middle" style="flex-grow: 1; color: rgb(255, 255, 255); font-size: 22px; flex-direction: row-reverse; padding-right: 5%; align-items: center; padding-top: 0; padding-bottom: 0; padding-left: 0;">
+            <ui:Label tabindex="-1" text="Toy Assemblers" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+        <ui:VisualElement name="lower_middle" style="flex-grow: 1; color: rgb(255, 255, 255); font-size: 22px; align-items: center; flex-direction: row; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 24%;">
+            <ui:Label tabindex="-1" text="Garbage Can" parse-escape-sequences="true" display-tooltip-when-elided="true" name="garbage_can" />
+        </ui:VisualElement>
+        <ui:VisualElement name="lower" style="flex-grow: 1; flex-direction: row; justify-content: space-between; padding-right: 6%; padding-top: 0; padding-bottom: 0; padding-left: 33%; align-items: center; color: rgb(255, 255, 255); font-size: 22px;">
+            <ui:Label tabindex="-1" text="Red Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="red" />
+            <ui:Label tabindex="-1" text="Yellow Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="yellow" />
+            <ui:Label tabindex="-1" text="Green Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="green" />
+            <ui:Label tabindex="-1" text="Blue Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="blue" />
+            <ui:Label tabindex="-1" text="Purple Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="purple" />
+            <ui:Label tabindex="-1" text="Black Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="black" focusable="false" style="height: 25px;" />
+            <ui:Label tabindex="-1" text="White Plastic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="white" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
