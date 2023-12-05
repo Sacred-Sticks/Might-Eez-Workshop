@@ -8,13 +8,13 @@ public class WorkstationStatusDisplay : MonoBehaviour, IObserver<Workstation.Sta
     [SerializeField] private Material activeMaterial;
     [SerializeField] private Material completedMaterial;
     
-    private MeshRenderer renderer;
+    private MeshRenderer renderComponent;
 
     #region UnityEvents
     private void Awake()
     {
         transform.parent.GetComponent<Workstation>().AddObserver(this);
-        renderer = GetComponent<MeshRenderer>();
+        renderComponent = GetComponent<MeshRenderer>();
     }
     #endregion
     
@@ -32,6 +32,6 @@ public class WorkstationStatusDisplay : MonoBehaviour, IObserver<Workstation.Sta
 
     private void SetMaterial(Material mat)
     {
-        renderer.material = mat;
+        renderComponent.material = mat;
     }
 }

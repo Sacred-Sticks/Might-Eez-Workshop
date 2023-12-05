@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine.UI;
 
 public abstract class WorkstationInventory
 {
@@ -48,6 +46,12 @@ public abstract class WorkstationInventory
             inputs.Add(resource);
             return true;
         }
+    }
+
+    public void AddResource(Resource resource)
+    {
+        var inputs = GetInputs<Resource>();
+        inputs?.Add(resource);
     }
 
     public List<T> GetInputs<T>() where T : Resource

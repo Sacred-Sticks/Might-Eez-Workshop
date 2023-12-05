@@ -96,6 +96,12 @@ public class ResourceCarrier : MonoBehaviour, IInputReceiver
 
     private void GiveResource(Workstation workstation)
     {
+        if (workstation.Inventory.InputType == typeof(Resource))
+        {
+            workstation.Inventory.AddResource(resource);
+            Resource = new Resource();
+            return;
+        }
         bool giveSuccessful = resource switch
         {
             Toy toy => workstation.Inventory.AddInput(toy),

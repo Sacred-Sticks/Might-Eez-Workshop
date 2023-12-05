@@ -141,7 +141,7 @@ public class Output : ICommand
         bool correctOrder = ToyFactory.OutputToy(input);
         if (!correctOrder)
             workstation.Inventory.SetOutput(input);
-        workstation.WorkstationActive = Workstation.Status.Completed;
+        workstation.WorkstationActive = Workstation.Status.Idle;
     }
 }
 
@@ -160,6 +160,6 @@ public class Garbage : ICommand
         workstation.Inventory.ClearInputs<Resource>();
         workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
-        workstation.WorkstationActive = Workstation.Status.Completed;
+        workstation.WorkstationActive = Workstation.Status.Idle;
     }
 }
