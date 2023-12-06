@@ -27,6 +27,12 @@ namespace Kickstarter.Observer
                 observers.Add(observer);
             }
         }
+
+        public void AddObservers(IEnumerable<object> observers)
+        {
+            foreach (object observer in observers)
+                AddObserver(observer);
+        }
         
         private IList GetObserverList(Type type)
         {

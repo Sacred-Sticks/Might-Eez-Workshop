@@ -1,9 +1,10 @@
 using System;
 using Kickstarter.Events;
+using Kickstarter.Observer;
 using UnityEngine;
 using IServiceProvider = Kickstarter.Events.IServiceProvider;
 
-public class ResourceDisplay : MonoBehaviour, IServiceProvider
+public class ResourceDisplay : Observable, IServiceProvider
 {
     [SerializeField] private Service showCurrentResource;
 
@@ -23,6 +24,7 @@ public class ResourceDisplay : MonoBehaviour, IServiceProvider
 
     private void Start()
     {
+        AddObservers(GetComponentsInChildren<ICarriedResourceDisplay>());
         foreach (var resourceDisplay in resourceDisplays)
             resourceDisplay.SetActive(false);
     }
@@ -42,19 +44,26 @@ public class ResourceDisplay : MonoBehaviour, IServiceProvider
 
     private void ShowCurrentResource(Resource resource)
     {
+        const int baseMaterial = 0;
+        const int processedMaterial = 1;
+        const int toyPart = 2;
+        const int toy = 3;
+        const int invalid = -1;
+        
         int displayIndex = resource.GetType() switch
         {
-            not null when resource.GetType() == typeof(BaseMaterial) => 0,
-            not null when resource.GetType() == typeof(ProcessedMaterial) => 1,
-            not null when resource.GetType() == typeof(ToyPart) => 2,
-            not null when resource.GetType() == typeof(Toy) => 3,
-            _ => -1,
+            not null when resource.GetType() == typeof(BaseMaterial) => baseMaterial,
+            not null when resource.GetType() == typeof(ProcessedMaterial) => processedMaterial,
+            not null when resource.GetType() == typeof(ToyPart) => toyPart,
+            not null when resource.GetType() == typeof(Toy) => toy,
+            _ => invalid,
         };
 
-        if (currentActiveIndex != -1)
+        if (currentActiveIndex != invalid)
             resourceDisplays[currentActiveIndex].SetActive(false);
         currentActiveIndex = displayIndex;
-        if (currentActiveIndex != -1)
+        if (currentActiveIndex != invalid)
             resourceDisplays[currentActiveIndex].SetActive(true);
+        NotifyObservers(resource);
     }
 }
