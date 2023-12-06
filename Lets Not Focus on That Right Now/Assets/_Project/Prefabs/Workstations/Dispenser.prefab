@@ -64,7 +64,7 @@ PrefabInstance:
     - target: {fileID: 579348856926011749, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
       propertyPath: m_Name
-      value: Dispenser Variant
+      value: Dispenser
       objectReference: {fileID: 0}
     - target: {fileID: 1158557043348538700, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
@@ -115,6 +115,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753266572871802175, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
