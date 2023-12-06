@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 579348856926011749, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
       propertyPath: m_Name
-      value: Garbage Variant
+      value: Garbage
       objectReference: {fileID: 0}
     - target: {fileID: 1158557043348538700, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
@@ -63,11 +63,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4770282085669245106, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9998faba44540934e905ad46492a1a39, type: 2}
     - target: {fileID: 5049911338400433045, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
         type: 3}
       propertyPath: workstationType
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6493211062784056300, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
+        type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 51cb58e0e2f030348a308c254abe5603,
+        type: 3}
+    - target: {fileID: 6493211062784056300, guid: 9f742f0ae7bc7cb4481fe18acd1ea93b,
+        type: 3}
+      propertyPath: m_PanelSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d40803b8ca9c53479d539d4acaf01b2,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
