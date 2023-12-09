@@ -8,7 +8,7 @@
             <ui:VisualElement name="container_actions" style="flex-grow: 1;">
                 <ui:Label tabindex="-1" text="Lucas Ackman: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="lucas" class="right_justified credits_text" />
                 <ui:Label tabindex="-1" text="Ethan Kirkpatrick: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="ethan" class="right_justified credits_text" />
-                <ui:Label tabindex="-1" text="Brandon Lastname: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="brandon" class="right_justified credits_text" />
+                <ui:Label tabindex="-1" text="Brandon Meyer: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="brandon" class="right_justified credits_text" />
             </ui:VisualElement>
             <ui:VisualElement name="container_inputs" style="flex-grow: 1;">
                 <ui:Label tabindex="-1" text=" Lead Engineer &amp; Designer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_Lucas" class="credits_text" />
