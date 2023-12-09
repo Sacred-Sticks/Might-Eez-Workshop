@@ -69,6 +69,11 @@ namespace Kickstarter.UI
                 appropriateAction(element);
         }
 
+        protected void ClearElements()
+        {
+            typeActions.Clear();
+        }
+
         [Serializable] protected class Element
         {
             [SerializeField] protected string name;

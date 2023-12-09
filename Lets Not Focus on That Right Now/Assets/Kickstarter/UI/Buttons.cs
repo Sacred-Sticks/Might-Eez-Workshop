@@ -8,9 +8,14 @@ namespace Kickstarter.UI
     {
         [SerializeField] private ButtonElement[] elements;
 
-        private void Awake()
+        private void OnEnable()
         {
             InitializeElements(elements);
+        }
+
+        private void OnDisable()
+        {
+            ClearElements();
         }
     }
 }
