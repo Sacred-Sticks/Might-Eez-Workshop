@@ -14,8 +14,11 @@ public class CustomerSpwaner : MonoBehaviour
     [SerializeField] private Range<float, float> customerPatienceRange;
     [SerializeField] private Range<float, float> customerPriceRange;
 
+    [SerializeField] private float gameTime;
+
     private IEnumerator Start()
     {
+        StartCoroutine(GameTimer());
         for (;;)
         {
             var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation, transform);
@@ -30,7 +33,6 @@ public class CustomerSpwaner : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
             spawnDelay.Minimum -= spawnDelayDepreciation;
             spawnDelay.Maximum -= spawnDelayDepreciation;
-
         }
     }
 
@@ -62,6 +64,12 @@ public class CustomerSpwaner : MonoBehaviour
         var baseMaterial = ToyFactory.CreateMaterial(materialType, colorType);
         var processedMaterial = ToyFactory.ProcessMaterial(baseMaterial);
         return ToyFactory.ConstructToyPart(processedMaterial, toySection);
+    }
+
+    private IEnumerator GameTimer()
+    {
+        yield return new WaitForSeconds(gameTime);
+        GameManager.instance.EndGame(GameManager.EndGameStatus.Win);
     }
 
     private static T GetRandomEnumValue<T>() where T : Enum

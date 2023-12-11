@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Menus.uss?fileID=7433441132597879392&amp;guid=c4362a6a13adf1049a2c3becc1b82555&amp;type=3#Menus" />
+    <ui:VisualElement name="backdrop" class="backdrop">
+        <ui:VisualElement name="container_title" class="title">
+            <ui:Label tabindex="-1" text="MIGHT-EEZ&#10;Workshop" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title" style="flex-grow: 1; font-size: 130%; -unity-text-align: upper-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="containers_controls" style="flex-grow: 1; flex-direction: row; padding-top: 5%; padding-right: 5%; padding-bottom: 5%; padding-left: 5%;">
+            <ui:VisualElement name="container_actions" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Move:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="movement" class="text right_justified" />
+                <ui:Label tabindex="-1" text="Interact:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="interaction" class="text right_justified" />
+            </ui:VisualElement>
+            <ui:VisualElement name="container_inputs" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="WASD" parse-escape-sequences="true" display-tooltip-when-elided="true" name="movement_input" class="text" />
+                <ui:Label tabindex="-1" text="Left-Click" parse-escape-sequences="true" display-tooltip-when-elided="true" name="interaction_input" class="text" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="container_buttons" style="flex-grow: 0.5; padding-bottom: 5%; padding-top: 0; padding-right: 0; padding-left: 0; margin-top: -21px;">
+            <ui:Button text="Return to Menu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_menu" class="button" style="margin-right: 40%; margin-left: 40%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
