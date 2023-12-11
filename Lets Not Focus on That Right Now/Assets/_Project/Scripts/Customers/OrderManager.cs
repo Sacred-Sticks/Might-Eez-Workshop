@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class OrderManager
 {
     private static readonly List<Customer> activeCustomers = new List<Customer>();
     private const int maxCustomers = 8;
 
+    public static void ClearCustomers()
+    {
+        activeCustomers.Clear();
+    }
+    
     public static void AddCustomer(Customer customer)
     {
         if (activeCustomers.Contains(customer))
@@ -14,7 +18,7 @@ public class OrderManager
         activeCustomers.Add(customer);
         OrderListUI.InjectNewOrder(customer);
         if (activeCustomers.Count > maxCustomers)
-            Debug.Log("Game Over");
+            TriggerGameLoss();
     }
 
     public static bool FillOrder(Toy producedToy)
@@ -26,5 +30,10 @@ public class OrderManager
         activeCustomers.Remove(correctCustomer);
         OrderListUI.RemoveOrder(correctCustomer);
         return true;
+    }
+
+    private static void TriggerGameLoss()
+    {
+        GameManager.instance.EndGame(GameManager.EndGameStatus.Lose);
     }
 }

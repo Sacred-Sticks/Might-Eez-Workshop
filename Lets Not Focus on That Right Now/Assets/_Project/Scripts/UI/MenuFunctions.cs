@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MenuFunctions : MonoBehaviour
 {
     public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        GameManager.LoadSceneByIndex(sceneIndex);
     }
 
     public void ToggleMenu(UIDocument menu)

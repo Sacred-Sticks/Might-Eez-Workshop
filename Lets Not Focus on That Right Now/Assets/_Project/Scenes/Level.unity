@@ -2170,55 +2170,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: orderPosition.x
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: orderPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: waitingPosition.x
-      value: -2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: waitingPosition.z
-      value: 5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: spawnDelay.maximum
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: spawnDelay.minimum
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: spawnDelayDepreciation
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: spawnDelay.<Maximum>k__BackingField
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
-        type: 3}
-      propertyPath: spawnDelay.<Minimum>k__BackingField
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.03
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
@@ -5252,6 +5207,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2602187068075321601, guid: 5db1bb8484b90d846aa8829ba6644c29,
+        type: 3}
+      propertyPath: endgameStatus
+      value: 
+      objectReference: {fileID: 11400000, guid: 551bf766bab297043874f4b6ef009bdf,
+        type: 2}
+    - target: {fileID: 2602187068075321601, guid: 5db1bb8484b90d846aa8829ba6644c29,
+        type: 3}
+      propertyPath: endgameSceneIndex
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6987733204155567546, guid: 5db1bb8484b90d846aa8829ba6644c29,
         type: 3}
