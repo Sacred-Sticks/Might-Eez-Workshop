@@ -58,3 +58,4 @@ MonoBehaviour:
   customerPriceRange:
     <Minimum>k__BackingField: 0
     <Maximum>k__BackingField: 0
+  gameTime: 10
