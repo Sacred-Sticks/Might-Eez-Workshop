@@ -29,6 +29,10 @@ public class OrderManager
         correctCustomer.FillOrder();
         activeCustomers.Remove(correctCustomer);
         OrderListUI.RemoveOrder(correctCustomer);
+        if (activeCustomers.Count == 0)
+        {
+            CustomerSpawner.instance.CreateCustomer(CustomerSpawner.instance.SpawnDelay);
+        }
         return true;
     }
 

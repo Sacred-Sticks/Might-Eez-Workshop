@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CustomerSpwaner : MonoBehaviour
+public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private Range<float, float> spawnDelay;
@@ -16,26 +16,45 @@ public class CustomerSpwaner : MonoBehaviour
 
     [SerializeField] private float gameTime;
 
+    public static CustomerSpawner instance;
+    public Range<float, float> SpawnDelay => spawnDelay;
+
+    private void Awake()
+    {
+        InitializeSingleton();
+    }
+
     private IEnumerator Start()
     {
         StartCoroutine(GameTimer());
         for (;;)
         {
-            var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation, transform);
-            var customer = new Customer.Builder()
-                .WithPatience(Random.Range(customerPatienceRange.Minimum, customerPatienceRange.Maximum))
-                .WithPrice(Random.Range(customerPriceRange.Minimum, customerPriceRange.Maximum))
-                .WithOrderPosition(orderPosition)
-                .WithWaitingPosition(waitingPosition)
-                .WithToy(CreateToyTemplate())
-                .Build(customerGO);
-            OrderManager.AddCustomer(customer);
-            yield return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
-            spawnDelay.Minimum -= spawnDelayDepreciation;
-            spawnDelay.Maximum -= spawnDelayDepreciation;
+            yield return CreateCustomer(spawnDelay);
         }
     }
 
+    public object CreateCustomer(Range<float, float> spawnDelay)
+    {
+        var customerGO = Instantiate(customerPrefab, transform.position + Vector3.up, transform.rotation, transform);
+        var customer = new Customer.Builder()
+            .WithPatience(Random.Range(customerPatienceRange.Minimum, customerPatienceRange.Maximum))
+            .WithPrice(Random.Range(customerPriceRange.Minimum, customerPriceRange.Maximum))
+            .WithOrderPosition(orderPosition)
+            .WithWaitingPosition(waitingPosition)
+            .WithToy(CreateToyTemplate())
+            .Build(customerGO);
+        OrderManager.AddCustomer(customer);
+        spawnDelay.Minimum -= spawnDelayDepreciation;
+        spawnDelay.Maximum -= spawnDelayDepreciation;
+        return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
+    }
+
+    private void InitializeSingleton()
+    {
+        if (instance == null)
+            instance = this;
+    }
+    
     private Toy CreateToyTemplate()
     {
         var materialType = GetRandomEnumValue<Resource.MaterialType>();
@@ -80,7 +99,7 @@ public class CustomerSpwaner : MonoBehaviour
     }
 
     [Serializable]
-    private class Range<TType1, TType2>
+    public class Range<TType1, TType2>
     {
         [field: SerializeField] public TType1 Minimum { get; set; }
         [field: SerializeField] public TType2 Maximum { get; set; }
