@@ -2178,7 +2178,17 @@ PrefabInstance:
     - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: spawnDelayDepreciation
-      value: 5
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: customerPatienceRange.<Maximum>k__BackingField
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: customerPatienceRange.<Minimum>k__BackingField
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
