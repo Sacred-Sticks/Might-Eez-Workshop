@@ -59,18 +59,18 @@ public class CustomerSpawner : MonoBehaviour
     {
         var materialType = GetRandomEnumValue<Resource.MaterialType>();
 
-        var leftArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
-        var rightArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
         var leftLeg = GenerateToyPart(ToyPart.ToySection.Leg, materialType);
         var rightLeg = GenerateToyPart(ToyPart.ToySection.Leg, materialType);
+        var leftArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
+        var rightArm = GenerateToyPart(ToyPart.ToySection.Arm, materialType);
         var torso = GenerateToyPart(ToyPart.ToySection.Torso, materialType);
         var head = GenerateToyPart(ToyPart.ToySection.Head, materialType);
         var parts = new[]
         {
-            leftArm,
-            rightArm,
             leftLeg,
             rightLeg,
+            leftArm,
+            rightArm,
             torso,
             head,
         };

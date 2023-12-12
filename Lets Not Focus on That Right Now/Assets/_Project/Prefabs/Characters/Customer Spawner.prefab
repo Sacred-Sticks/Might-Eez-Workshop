@@ -49,7 +49,7 @@ MonoBehaviour:
   spawnDelay:
     <Minimum>k__BackingField: 120
     <Maximum>k__BackingField: 140
-  spawnDelayDepreciation: 15
+  spawnDelayDepreciation: 7.5
   orderPosition: {x: -2, y: 0, z: 1}
   waitingPosition: {x: -2.5, y: 0, z: 5.5}
   customerPatienceRange:
