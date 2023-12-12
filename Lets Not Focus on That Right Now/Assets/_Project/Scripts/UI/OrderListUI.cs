@@ -39,7 +39,7 @@ public class OrderListUI : MonoBehaviour
 
         var timerElement = new RadialProgress();
         timerElement.AddToClassList(timerClass);
-        timerElement.progress = 0;
+        timerElement.progress = 100;
 
         var pieces = new VisualElement();
         pieces.AddToClassList(toyPartsClass);

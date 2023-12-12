@@ -124,6 +124,14 @@ public class Toy : Resource
 
     public static bool operator ==(Toy a, Toy b)
     {
+        if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            return true;
+
+        if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            return false;
+        
+        if (a.ToyParts.Length == 0 || b.ToyParts.Length == 0)
+            return false;
         var aParts = a.ToyParts.ToList();
         var bParts = b.ToyParts.ToList();
         for (int i = aParts.Count - 1; i >= 0; i--)
