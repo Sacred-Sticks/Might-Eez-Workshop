@@ -41,7 +41,7 @@ public class Customer : Observable
 
     private void Start()
     {
-        exitPosition = transform.position;
+        exitPosition = transform.position + new Vector3(0, 0, -10);
         var part0 = DesiredToy.ToyParts[0];
         var part1 = DesiredToy.ToyParts[1];
         var part2 = DesiredToy.ToyParts[2];
