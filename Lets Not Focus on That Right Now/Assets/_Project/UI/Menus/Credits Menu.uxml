@@ -13,7 +13,7 @@
             <ui:VisualElement name="container_inputs" style="flex-grow: 1;">
                 <ui:Label tabindex="-1" text=" Lead Engineer &amp; Designer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_Lucas" class="credits_text" />
                 <ui:Label tabindex="-1" text=" Lead Artist &amp; Designer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_ethan" class="credits_text" />
-                <ui:Label tabindex="-1" text=" Engineer &amp; Designer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_brandon" class="credits_text" />
+                <ui:Label tabindex="-1" text=" Engineer, Artist, &amp; Designer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_brandon" class="credits_text" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="container_buttons" style="flex-grow: 0.5; padding-bottom: 5%; padding-top: 0; padding-right: 0; padding-left: 0; margin-top: -21px;">
