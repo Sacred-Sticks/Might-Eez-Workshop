@@ -25,6 +25,12 @@ public class OrderListUI : MonoBehaviour
         document = GetComponent<UIDocument>();
         ordersRoot = document.rootVisualElement.Q<VisualElement>(listName);
     }
+    
+    public static void AddCustomerWhenEmpty()
+    {
+        if (customerOrders.Count == 0)
+            CustomerSpawner.instance.CreateCustomer(CustomerSpawner.instance.SpawnDelay);
+    }
 
     public static void InjectNewOrder(Customer customer)
     {
@@ -53,6 +59,18 @@ public class OrderListUI : MonoBehaviour
         if (!customerOrders.ContainsKey(customer))
             return;
         ordersRoot.hierarchy.Remove(customerOrders[customer]);
+        customerOrders.Remove(customer);
+    }
+
+    public static void SetTimer(Customer customer, float value)
+    {
+        customerOrders[customer].Q<RadialProgress>().progress = value;
+    }
+
+    public static void BlockOrder(Customer customer)
+    {
+        customerOrders[customer].RemoveChildren();
+        customerOrders[customer].CreateChild(new [] {"block",});
         customerOrders.Remove(customer);
     }
     

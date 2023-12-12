@@ -29,6 +29,7 @@ public class OrderManager
         correctCustomer.FillOrder();
         activeCustomers.Remove(correctCustomer);
         OrderListUI.RemoveOrder(correctCustomer);
+        OrderListUI.AddCustomerWhenEmpty();
         return true;
     }
 

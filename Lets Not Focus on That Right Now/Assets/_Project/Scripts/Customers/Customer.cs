@@ -14,9 +14,10 @@ public class Customer : Observable
     public Toy DesiredToy { get; private set; }
     private Vector3 orderPosition;
     private Vector3 waitingPosition;
+    private Vector3 exitPosition;
     private float waitingTime;
     private float price;
-    
+
     public float RemainingTime { get; private set; }
 
     private const float timeStep = 1;
@@ -40,6 +41,7 @@ public class Customer : Observable
 
     private void Start()
     {
+        exitPosition = transform.position;
         var part0 = DesiredToy.ToyParts[0];
         var part1 = DesiredToy.ToyParts[1];
         var part2 = DesiredToy.ToyParts[2];
@@ -60,6 +62,8 @@ public class Customer : Observable
             .WithStateListener(CustomerStatus.Leaving, transitionType.Start, Leave)
             .WithInitialState(CustomerStatus.Arriving)
             .Build();
+
+        StartCoroutine(CustomerTimer());
     }
 
     private void Update()
@@ -90,11 +94,15 @@ public class Customer : Observable
     private void PayForOrder()
     {
         NotifyObservers(CustomerStatus.OrderFulfilled);
+        agent.SetDestination(exitPosition);
     }
 
     private void DeclineOrder()
     {
-        NotifyObservers(CustomerStatus.OrderCancelled); // state is OrderDenied
+        NotifyObservers(CustomerStatus.OrderCancelled);
+        OrderListUI.BlockOrder(this);
+        OrderListUI.AddCustomerWhenEmpty();
+        agent.SetDestination(exitPosition);
     }
 
     private void Leave()
@@ -107,12 +115,16 @@ public class Customer : Observable
 
     private IEnumerator CustomerTimer()
     {
+        RemainingTime = waitingTime;
         for (;;)
         {
             yield return new WaitForSeconds(timeStep);
             RemainingTime -= timeStep;
-            if (RemainingTime <= 0)
-                stateMachine.CurrentState = CustomerStatus.OrderCancelled;
+            OrderListUI.SetTimer(this, RemainingTime / waitingTime * 100);
+            if (RemainingTime > 0)
+                continue;
+            stateMachine.CurrentState = CustomerStatus.OrderCancelled;
+            break;
         }
     }
 
