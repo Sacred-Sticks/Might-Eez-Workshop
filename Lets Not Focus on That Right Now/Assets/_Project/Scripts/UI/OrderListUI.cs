@@ -64,7 +64,9 @@ public class OrderListUI : MonoBehaviour
 
     public static void SetTimer(Customer customer, float value)
     {
-        customerOrders[customer].Q<RadialProgress>().progress = value;
+        if (!customerOrders.TryGetValue(customer, out var root))
+            return;
+        root.Q<RadialProgress>().progress = value;
     }
 
     public static void BlockOrder(Customer customer)

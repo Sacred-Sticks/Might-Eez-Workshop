@@ -53,9 +53,9 @@ MonoBehaviour:
   orderPosition: {x: -2, y: 0, z: 1}
   waitingPosition: {x: -2.5, y: 0, z: 5.5}
   customerPatienceRange:
-    <Minimum>k__BackingField: 0
-    <Maximum>k__BackingField: 0
+    <Minimum>k__BackingField: 90
+    <Maximum>k__BackingField: 120
   customerPriceRange:
     <Minimum>k__BackingField: 0
     <Maximum>k__BackingField: 0
-  gameTime: 10
+  gameTime: 600
