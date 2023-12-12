@@ -136,11 +136,11 @@ public class Output : ICommand
     {
         input = workstation.Inventory.GetInputs<Toy>().FirstOrDefault();
         workstation.Inventory.ClearInputs<Toy>();
+        if (input == null)
+            return;
         workstation.WorkstationActive = Workstation.Status.Active;
         await Task.Delay(MillisecondsDelay);
-        bool correctOrder = ToyFactory.OutputToy(input);
-        if (!correctOrder)
-            workstation.Inventory.SetOutput(input);
+        ToyFactory.OutputToy(input);
         workstation.WorkstationActive = Workstation.Status.Idle;
     }
 }
