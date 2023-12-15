@@ -16,6 +16,9 @@ public class CustomerSpawner : MonoBehaviour
 
     [SerializeField] private float gameTime;
 
+    private const int minimum = 15;
+    private const int maximum = 45;
+
     public static CustomerSpawner instance;
     public Range<float, float> SpawnDelay => spawnDelay;
 
@@ -46,6 +49,8 @@ public class CustomerSpawner : MonoBehaviour
         OrderManager.AddCustomer(customer);
         spawnDelay.Minimum -= spawnDelayDepreciation;
         spawnDelay.Maximum -= spawnDelayDepreciation;
+        spawnDelay.Minimum = Mathf.Max(minimum, spawnDelay.Minimum);
+        spawnDelay.Maximum = Mathf.Max(maximum, spawnDelay.Maximum);
         return new WaitForSeconds(Random.Range(spawnDelay.Minimum, spawnDelay.Maximum));
     }
 

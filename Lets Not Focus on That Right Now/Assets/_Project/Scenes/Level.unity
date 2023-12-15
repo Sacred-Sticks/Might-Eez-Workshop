@@ -2298,6 +2298,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelayDepreciation
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.<Maximum>k__BackingField
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: spawnDelay.<Minimum>k__BackingField
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: customerPatienceRange.<Maximum>k__BackingField
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796101327450545673, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
+        type: 3}
+      propertyPath: customerPatienceRange.<Minimum>k__BackingField
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 6237069627905525574, guid: 3347a659e8c1cc642bc5ac34f32a2b6d,
         type: 3}
       propertyPath: m_LocalPosition.x
